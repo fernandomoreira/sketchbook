@@ -1,0 +1,29 @@
+
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Instruções<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+
+Para utilizar o S4a (Scratch For Arduino) siga os passos:
+
+
+1 - Abra na IDE do Arduino, o Arquivo S4AFirmware15.ino, que está na pasta S4AFirmware15.
+Caso não consiga abrir direto, clique com o botão direito -> Abrir com -> Editor de Texto, copie e cole na IDE;
+
+2 - Conecte o Arduino e faça o upload do schetch;
+
+3 - Aguarde completar e abra o S4A;
+
+4 - Se tudo ocorrer bem, a caixa de diálogo onde está escrita "Searching board... "  desaparecerá.
+
+Faça bom proveito!
+
+
+Fernando Moreira, 
+
+
+Qualquer duvida:
+
+fernando.moreira.ti@gmail.com
+arduino-bahia.blogspot.com

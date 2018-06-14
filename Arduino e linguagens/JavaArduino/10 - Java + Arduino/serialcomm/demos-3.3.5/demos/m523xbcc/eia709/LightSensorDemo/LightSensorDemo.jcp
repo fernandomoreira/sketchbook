@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcontrol version="1.0">
+  <project name="LightSensorDemo">
+    <profile name="JControl/M523XBCC/Freescale" revision="4.1.0" build="20070830"/>
+    <description>
+      <locale language="en"><![CDATA[New project with JAVA source files.]]></locale>
+      <locale language="de"><![CDATA[Neues Projekt mit JAVA-Quelldateien]]></locale>
+    </description>
+    <workspace>
+      <file name="LightSensorDemo.jcw"/>
+    </workspace>
+    <libraries/>
+    <files>
+      <layer domain="java">
+        <dir name="src/"/>
+        <dir name="rsc/"/>
+      </layer>
+    </files>
+  </project>
+</jcontrol>

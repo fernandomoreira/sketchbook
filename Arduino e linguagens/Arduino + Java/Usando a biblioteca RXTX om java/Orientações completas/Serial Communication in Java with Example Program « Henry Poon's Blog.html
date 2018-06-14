@@ -1,0 +1,2629 @@
+<!DOCTYPE HTML>
+<html dir="ltr" lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><script async="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/cbgapi.loaded_0"></script>
+<!--[if IE 7]>
+<html id="ie7" dir="ltr" lang="en">
+<![endif]-->
+<!--[if IE 8]>
+<html id="ie8" dir="ltr" lang="en">
+<![endif]-->
+<!--[if (!IE)]><!-->
+
+<!--<![endif]-->
+<!--
+	generated 264 seconds ago
+	generated in 0.758 seconds
+	served from batcache in 0.005 seconds
+	expires in 36 seconds
+-->
+
+<meta charset="UTF-8">
+<title>Serial Communication in Java with Example Program « Henry Poon's Blog</title>
+<link rel="profile" href="http://gmpg.org/xfn/11">
+<link rel="stylesheet" type="text/css" media="all" href="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/style_002.css">
+<link rel="pingback" href="http://henrypoon.wordpress.com/xmlrpc.php">
+<meta name="google-site-verification" content="fgQEeTlfKXlOYyatAYqy-i4zdGRdCWmzJ97bXskI1RM">
+<link rel="alternate" type="application/rss+xml" title="Henry Poon's Blog » Feed" href="http://henrypoon.wordpress.com/feed/">
+<link rel="alternate" type="application/rss+xml" title="Henry Poon's Blog » Comments Feed" href="http://henrypoon.wordpress.com/comments/feed/">
+<link rel="alternate" type="application/rss+xml" title="Henry Poon's Blog » Serial Communication in Java with Example&nbsp;Program Comments Feed" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/feed/">
+<script type="text/javascript" async="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/quant.js"></script><script type="text/javascript">
+/* <![CDATA[ */
+function addLoadEvent(func){var oldonload=window.onload;if(typeof window.onload!='function'){window.onload=func;}else{window.onload=function(){oldonload();func();}}}
+/* ]]> */
+</script>
+<link rel="stylesheet" id="all-css-0" href="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/a.css" type="text/css" media="all">
+<link rel="stylesheet" id="print-css-0" href="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/global-print.css" type="text/css" media="print">
+<script type="text/javascript">
+/* <![CDATA[ */
+var LoggedOutFollow = {"invalid_email":"Your subscription did not succeed, please try again with a valid email address."};
+/* ]]> */
+</script>
+<script type="text/javascript" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/a.js"></script>
+<link rel="stylesheet" id="all-css-0" href="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/style.css" type="text/css" media="all">
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='highlander-comments-ie7-css'  href='http://s2.wp.com/wp-content/mu-plugins/highlander-comments/style-ie7.css?m=1307172283g&#038;ver=20110606' type='text/css' media='all' />
+<![endif]-->
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://henrypoon.wordpress.com/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://henrypoon.wordpress.com/wp-includes/wlwmanifest.xml"> 
+<link rel="prev" title="Diagnosing the Source of Internet Connectivity&nbsp;Problems" href="http://henrypoon.wordpress.com/2010/12/30/diagnosing-the-source-of-internet-connectivity-problems/">
+<link rel="next" title="2010 in&nbsp;Review" href="http://henrypoon.wordpress.com/2011/01/02/2010-in-review/">
+<meta name="generator" content="WordPress.com">
+<link rel="canonical" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/">
+<link rel="shortlink" href="http://wp.me/pJhGA-98">
+<link rel="alternate" type="application/json+oembed" href="http://public-api.wordpress.com/oembed/1.0/?format=json&amp;url=http%3A%2F%2Fhenrypoon.wordpress.com%2F2011%2F01%2F01%2Fserial-communication-in-java-with-example-program%2F&amp;for=wpcom-auto-discovery"><link rel="alternate" type="application/xml+oembed" href="http://public-api.wordpress.com/oembed/1.0/?format=xml&amp;url=http%3A%2F%2Fhenrypoon.wordpress.com%2F2011%2F01%2F01%2Fserial-communication-in-java-with-example-program%2F&amp;for=wpcom-auto-discovery"><meta property="og:type" content="article">
+<meta property="og:title" content="Serial Communication in Java with Example&nbsp;Program">
+<meta property="og:url" content="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/">
+<meta property="og:description" content="This is more of a follow-up to my previous post about serial programming in Java (here) and how to install the RXTX libraries (here).&nbsp; This post also assumes that Java is already properly set up wi...">
+<meta property="og:site_name" content="Henry Poon's Blog">
+<meta property="og:image" content="http://henrypoon.files.wordpress.com/2011/01/javagui3.png?w=200">
+<meta name="twitter:image" content="http://henrypoon.files.wordpress.com/2011/01/javagui3.png">
+<meta name="twitter:card" content="photo">
+<meta property="fb:app_id" content="249643311490">
+<link rel="shortcut icon" type="image/x-icon" href="http://s2.wp.com/i/favicon.ico?m=1311976028g" sizes="16x16 24x24 32x32 48x48">
+<link rel="icon" type="image/x-icon" href="http://s2.wp.com/i/favicon.ico?m=1311976028g" sizes="16x16 24x24 32x32 48x48">
+<link rel="apple-touch-icon-precomposed" href="http://s0.wp.com/i/webclip.png?m=1311618091g">
+<link rel="openid.server" href="http://henrypoon.wordpress.com/?openidserver=1">
+<link rel="openid.delegate" href="http://henrypoon.wordpress.com/">
+<link rel="search" type="application/opensearchdescription+xml" href="http://henrypoon.wordpress.com/osd.xml" title="Henry Poon's Blog">
+<link rel="search" type="application/opensearchdescription+xml" href="http://wordpress.com/opensearch.xml" title="WordPress.com">
+<meta name="application-name" content="Henry Poon's Blog"><meta name="msapplication-window" content="width=device-width;height=device-height"><meta name="msapplication-tooltip" content="because I feel like rambling about stuff"><meta name="msapplication-task" content="name=Subscribe;action-uri=http://henrypoon.wordpress.com/feed/;icon-uri=http://s2.wp.com/i/favicon.ico"><meta name="msapplication-task" content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=http://s2.wp.com/i/favicon.ico"><meta name="msapplication-task" content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=http://s2.wp.com/i/favicon.ico"><meta name="msapplication-task" content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=http://s2.wp.com/i/favicon.ico"><meta name="title" content="Serial Communication in Java with Example&nbsp;Program | Henry Poon's Blog on WordPress.com">
+<meta name="description" content="This is more of a follow-up to my previous post about serial programming in Java (here) and how to install the RXTX libraries (here).&nbsp; This post also assumes that Java is already properly set up with RXTX. Generally, communication with serial ports involves these steps (in no particular order): Searching for serial ports Connecting to…">
+<link rel="stylesheet" type="text/css" id="gravatar-card-css" href="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/hovercard.css"><link rel="stylesheet" type="text/css" id="gravatar-card-services-css" href="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/services.css"></head><body class="single single-post postid-566 single-format-standard content-sidebar highlander-enabled highlander-light">
+<div id="page">
+
+	<div id="container">
+
+		<ul class="skip">
+			<li><a href="#access">Skip to navigation</a></li>
+			<li><a href="#main">Skip to main content</a></li>
+			<li><a href="#sidebar">Skip to primary sidebar</a></li>
+			<li><a href="#sidebar2">Skip to secondary sidebar</a></li>
+			<li><a href="#footer">Skip to footer</a></li>
+		</ul>
+
+		<div id="header">
+			<div id="branding" class="clear-block">
+							<h3 id="logo">
+				<span>
+					<a href="http://henrypoon.wordpress.com/" title="Henry Poon's Blog" rel="home">Henry Poon's Blog</a>
+				</span>
+				</h3>
+				<div id="site-description">because I feel like rambling about stuff</div>
+			</div><!-- #branding-->
+
+			<div id="access" class="clear-block" role="navigation">
+				<div class="menu"><ul><li><a href="http://henrypoon.wordpress.com/" title="Home">Home</a></li><li class="page_item page-item-2"><a href="http://henrypoon.wordpress.com/about/">About</a></li><li class="page_item page-item-612"><a href="http://henrypoon.wordpress.com/contact/">Contact</a></li></ul></div>
+
+				<div class="social-icons">
+
+					
+					
+					
+					
+					
+				</div><!-- .social-icons -->
+
+			</div><!-- #access -->
+
+							
+			</div><!-- #header-->
+
+			<div id="main">
+ 			<div id="content-container">
+	 			<div id="content">
+					
+						<div class="post-navigation nav-above">
+							<div class="nav-previous">
+								<a href="http://henrypoon.wordpress.com/2010/12/30/diagnosing-the-source-of-internet-connectivity-problems/" rel="prev">← Diagnosing the Source of Internet Connectivity&nbsp;Problems</a>							</div>
+							<div class="nav-next">
+								<a href="http://henrypoon.wordpress.com/2011/01/02/2010-in-review/" rel="next">2010 in&nbsp;Review →</a>							</div>
+						</div><!-- .post-navigation -->
+
+						<div class="post-566 post type-post status-publish format-standard hentry category-computer-stuff post-wrapper clear-block">
+
+	
+			<h1 class="single-title">Serial Communication in Java with Example&nbsp;Program</h1>
+	
+	<div class="post-date">
+		<p class="day"><a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/" rel="bookmark" title="Permanent Link to Serial Communication in Java with Example&nbsp;Program">Jan 1</a></p>
+	</div><!-- .post-date -->
+
+	<div class="post-info clear-block">
+		<p class="author alignleft">Posted by <a href="http://henrypoon.wordpress.com/author/henrypoon/" title="Posts by hp" rel="author">hp</a></p>
+	</div><!-- .post-info clear-block" -->
+
+	<div class="entry clear-block">
+		<p>This is more of a follow-up to my previous post about serial programming in Java (<a title="Java Serial&nbsp;Programming" href="http://henrypoon.wordpress.com/2010/10/11/java-serial-programming/" target="_blank">here</a>) and how to install the RXTX libraries (<a title="Installing RXTX for Serial Communication with&nbsp;Java" href="http://henrypoon.wordpress.com/2010/12/25/installing-rxtx-for-serial-communication-with-java/" target="_blank">here</a>).&nbsp; This post also assumes that Java is already properly set up with RXTX.</p>
+<p>Generally, communication with serial ports involves these steps (in no particular order):</p>
+<ul>
+<li>Searching for serial ports</li>
+<li>Connecting to the serial port</li>
+<li>Starting the input output streams</li>
+<li>Adding an event listener to listen for incoming data</li>
+<li>Disconnecting from the serial port</li>
+<li>Sending Data</li>
+<li>Receiving Data</li>
+</ul>
+<p>I wrote an example program that includes all of those steps in it and
+ are each in their own separate method within the class, but first I 
+will go through my hardware set up.</p>
+<h1>Hardware Setup</h1>
+<p>My current hardware setup is as follows:</p>
+<ul>
+<li>PC connected to an XBee</li>
+<li>Arduino connected to an XBee</li>
+</ul>
+<p>User input is given from the PC through the a Java GUI that contains 
+code for serial communication, which is the code presented here.</p>
+<p>The Arduino is responsible for reading this data.&nbsp; This set up 
+is pretty much using my computer as a remote control for whatever device
+ is on the Arduino end.&nbsp; It could be a motor control, on-off 
+switch, etc.</p>
+<h1>Existing Code</h1>
+<p>The purpose of this post is to discuss serial programming in Java, 
+and not GUI’s.&nbsp; However, I did create a GUI for testing 
+purposes.&nbsp; See the Code Downloads section for the actual files.</p>
+<p><a href="http://henrypoon.files.wordpress.com/2011/01/javagui2.png"><img scale="1.5" originalh="284" originalw="622" class="alignnone" title="Java GUI" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/javagui_thumb2.png" alt="" height="284" width="622"></a></p>
+<p>Above is the picture of the GUI complete with the buttons that I use 
+to interact with the program.&nbsp; I also added key bindings which I 
+can use to control the throttle.</p>
+<p>When the program is first started, none of the GUI elements will work
+ except for the combo box and the connect button.&nbsp; Once a 
+successful connection is made the controls are enabled.&nbsp; This is 
+done through the use of the <em>setConnected(true)</em> and the <em>toggleControls()</em> methods shown in the example code that follows.</p>
+<h1>Imports</h1>
+<p>The imports i used for this program were as follows:</p>
+<div style="background-color: white; color: black;">
+<pre style="font-size: 11px;"><span style="color: blue;">import</span> gnu.io.*;
+<span style="color: blue;">import</span> java.awt.Color;
+<span style="color: blue;">import</span> java.io.IOException;
+<span style="color: blue;">import</span> java.io.InputStream;
+<span style="color: blue;">import</span> java.io.OutputStream;
+<span style="color: blue;">import</span> java.util.Enumeration;
+<span style="color: blue;">import</span> java.util.HashMap;
+<span style="color: blue;">import</span> java.util.TooManyListenersException;</pre>
+</div>
+<p>Depending on the Java IDE it might already know to tell you to use 
+these imports except for the first one.&nbsp; That first import is 
+specific to RXTX, and all its library methods/classes are in there.</p>
+<h1>Class Declaration</h1>
+<p>The code here reads:</p>
+<pre style="font-size: 11px;"><span style="color: blue;">public</span> <span style="color: blue;">class</span> Communicator <span style="color: blue;">implements</span> SerialPortEventListener</pre>
+<p>I named my class <em>Communicator</em>, but the name is really up to the programmer.&nbsp; The name pretty much reflects its intended use.</p>
+<p>The class should also <em>implement</em> the <em>SerialPortEventListener</em> class.&nbsp; This is a class in RXTX and is required in order to receive incoming data.</p>
+<p>On some IDE’s this may generate a public void method called <em>serialEvent()</em>.&nbsp; This method will be defined later.</p>
+<h1>Class Variables and Constants</h1>
+<p>Below are the variables and constants that I defined in my 
+class.&nbsp; What the variables are for is in the comments but a more 
+detailed explanation will follow.</p>
+<div style="background-color: white; color: black;">
+<pre style="font-size: 11px;">    <span style="color: green;">//passed from main GUI</span>
+    GUI window = <span style="color: blue;">null</span>;
+
+    <span style="color: green;">//for containing the ports that will be found</span>
+    <span style="color: blue;">private</span> Enumeration ports = <span style="color: blue;">null</span>;
+    <span style="color: green;">//map the port names to CommPortIdentifiers</span>
+    <span style="color: blue;">private</span> HashMap portMap = <span style="color: blue;">new</span> HashMap();
+
+    <span style="color: green;">//this is the object that contains the opened port</span>
+    <span style="color: blue;">private</span> CommPortIdentifier selectedPortIdentifier = <span style="color: blue;">null</span>;
+    <span style="color: blue;">private</span> SerialPort serialPort = <span style="color: blue;">null</span>;
+
+    <span style="color: green;">//input and output streams for sending and receiving data</span>
+    <span style="color: blue;">private</span> InputStream input = <span style="color: blue;">null</span>;
+    <span style="color: blue;">private</span> OutputStream output = <span style="color: blue;">null</span>;
+
+    <span style="color: green;">//just a boolean flag that i use for enabling</span>
+    <span style="color: green;">//and disabling buttons depending on whether the program</span>
+    <span style="color: green;">//is connected to a serial port or not</span>
+    <span style="color: blue;">private</span> <span style="color: blue;">boolean</span> bConnected = <span style="color: blue;">false</span>;
+
+    <span style="color: green;">//the timeout value for connecting with the port</span>
+    <span style="color: blue;">final</span> <span style="color: blue;">static</span> <span style="color: blue;">int</span> TIMEOUT = 2000;
+
+    <span style="color: green;">//some ascii values for for certain things</span>
+    <span style="color: blue;">final</span> <span style="color: blue;">static</span> <span style="color: blue;">int</span> SPACE_ASCII = 32;
+    <span style="color: blue;">final</span> <span style="color: blue;">static</span> <span style="color: blue;">int</span> DASH_ASCII = 45;
+    <span style="color: blue;">final</span> <span style="color: blue;">static</span> <span style="color: blue;">int</span> NEW_LINE_ASCII = 10;
+
+    <span style="color: green;">//a string for recording what goes on in the program</span>
+    <span style="color: green;">//this string is written to the GUI</span>
+    String logText = <span style="color: rgb(163, 21, 21);">""</span>;</pre>
+</div>
+<p>I could have easily put the variable definitions in the constructor but it wouldn’t change anything.</p>
+<p>The <em>GUI</em> object is another class that I wrote separate from this one that contains all the GUI elements.&nbsp; The GUI class extends <em>javax.swing.JFrame</em>.</p>
+<p>The <em>Enumeration</em> in Java is used for storing a series of elements of objects.&nbsp; In this case, the objects are <em>CommPortIdentifiers </em>(see Enumeration in the Reference Material).</p>
+<p>The <em>HashMap</em> is for mapping each of the ports’ names to the actual object. What that means is that I can associate (<em>put()</em>
+ method) the name of a serial port, say a string that says COM1, to an 
+object in the code.&nbsp; Later, I can access the name COM1 from the <em>HashMap</em> by using the <em>get()</em> method and it will return the object that it was associated with previously.</p>
+<p>The <em>CommPortIdentifiers</em> object is needed to gather the list of ports that are available for connection. by using its <em>getPortIdentifiers()</em> method.</p>
+<p>The <em>SerialPort</em> object is for storing the data for the port once a successful connection is made.</p>
+<p>The <em>InputStream</em> and <em>OutputStream</em> is the object that is required for sending and receiving data.</p>
+<p>The Boolean variable <em>bConnected</em> is just a flag that I use for enabling and disabling elements on the GUI.</p>
+<p>The constant <em>TIMEOUT</em> is a number required when opening the port so that it knows how long to try for before stopping.</p>
+<p>The constants for the ASCII values are some values that I use to send through the output stream that act as delimiters for data.</p>
+<p>The string <em>logText</em> is basically what the comment says.&nbsp;
+ When stuff happens in the program, the program stores a string in this 
+variable and it will be appended to a text area in the GUI.</p>
+<h1>Searching for Available Serial Ports</h1>
+<p>The method below is for searching for available serial ports on the 
+computer.&nbsp; Code adapted from Discovering Available Comm Ports from 
+the Reference Material.</p>
+<div style="background-color: white; color: black;">
+<pre style="font-size: 11px;">    <span style="color: green;">//search for all the serial ports</span>
+    <span style="color: green;">//pre style="font-size: 11px;": none</span>
+    <span style="color: green;">//post: adds all the found ports to a combo box on the GUI</span>
+    <span style="color: blue;">public</span> <span style="color: blue;">void</span> searchForPorts()
+    {
+        ports = CommPortIdentifier.getPortIdentifiers();
+
+        <span style="color: blue;">while</span> (ports.hasMoreElements())
+        {
+            CommPortIdentifier curPort = (CommPortIdentifier)ports.nextElement();
+
+            <span style="color: green;">//get only serial ports</span>
+            <span style="color: blue;">if</span> (curPort.getPortType() == CommPortIdentifier.PORT_SERIAL)
+            {
+                window.cboxPorts.addItem(curPort.getName());
+                portMap.put(curPort.getName(), curPort);
+            }
+        }
+    }</pre>
+</div>
+<p>The method <em>getPortIdentifiers()</em> returns an Enumeration of 
+all the comm ports on the computer.&nbsp; The code can iterate through 
+each element inside the Enumeration and determine whether or not it is a
+ serial port.&nbsp; The method <em>getPortType()</em> can identify what 
+kind of port it is.&nbsp; If it is a serial port, then the code will add
+ its name to a combo box in the GUI (so that users can pick what port to
+ connect to).&nbsp; The serial port that is found should also be mapped 
+to the HashMap so we can identify the object later.&nbsp; This is 
+helpful because the names listed in the combo box are the actual names 
+of the object (COM1, COM2, etc), and so we can use these names to 
+identify the actual object they are tied to.</p>
+<h1>Connecting to the Serial Port</h1>
+<p>The method below is for connecting to the serial port once they have 
+been found (see previous section).&nbsp; See How to Open A Serial Port 
+in the Reference Material for more information.</p>
+<div style="background-color: white; color: black;">
+<pre style="font-size: 11px;">    <span style="color: green;">//connect to the selected port in the combo box</span>
+    <span style="color: green;">//pre style="font-size: 11px;": ports are already found by using the searchForPorts</span>
+    <span style="color: green;">//method</span>
+    <span style="color: green;">//post: the connected comm port is stored in commPort, otherwise,</span>
+    <span style="color: green;">//an exception is generated</span>
+    <span style="color: blue;">public</span> <span style="color: blue;">void</span> connect()
+    {
+        String selectedPort = (String)window.cboxPorts.getSelectedItem();
+        selectedPortIdentifier = (CommPortIdentifier)portMap.get(selectedPort);
+
+        CommPort commPort = <span style="color: blue;">null</span>;
+
+        <span style="color: blue;">try</span>
+        {
+            <span style="color: green;">//the method below returns an object of type CommPort</span>
+            commPort = selectedPortIdentifier.open(<span style="color: rgb(163, 21, 21);">"TigerControlPanel"</span>, TIMEOUT);
+            <span style="color: green;">//the CommPort object can be casted to a SerialPort object</span>
+            serialPort = (SerialPort)commPort;
+
+            <span style="color: green;">//for controlling GUI elements</span>
+            setConnected(<span style="color: blue;">true</span>);
+
+            <span style="color: green;">//logging</span>
+            logText = selectedPort + <span style="color: rgb(163, 21, 21);">" opened successfully."</span>;
+            window.txtLog.setForeground(Color.black);
+            window.txtLog.append(logText + <span style="color: rgb(163, 21, 21);">"\n"</span>);
+
+            <span style="color: green;">//CODE ON SETTING BAUD RATE ETC OMITTED</span>
+            <span style="color: green;">//XBEE PAIR ASSUMED TO HAVE SAME SETTINGS ALREADY</span>
+
+            <span style="color: green;">//enables the controls on the GUI if a successful connection is made</span>
+            window.keybindingController.toggleControls();
+        }
+        <span style="color: blue;">catch</span> (PortInUseException e)
+        {
+            logText = selectedPort + <span style="color: rgb(163, 21, 21);">" is in use. ("</span> + e.toString() + <span style="color: rgb(163, 21, 21);">")"</span>;
+
+            window.txtLog.setForeground(Color.RED);
+            window.txtLog.append(logText + <span style="color: rgb(163, 21, 21);">"\n"</span>);
+        }
+        <span style="color: blue;">catch</span> (Exception e)
+        {
+            logText = <span style="color: rgb(163, 21, 21);">"Failed to open "</span> + selectedPort + <span style="color: rgb(163, 21, 21);">"("</span> + e.toString() + <span style="color: rgb(163, 21, 21);">")"</span>;
+            window.txtLog.append(logText + <span style="color: rgb(163, 21, 21);">"\n"</span>);
+            window.txtLog.setForeground(Color.RED);
+        }
+    }</pre>
+</div>
+<p>Using the <em>HashMap</em> we can retrieve the <em>CommPortIdentifier</em> object from the string that was mapped earlier.&nbsp; This is achieved through the <em>HashMap’s</em> <em>get()</em> method.&nbsp; The object must also be casted as a <em>CommPortIdentifier</em> because the <em>get()</em> method has a return type of <em>Object</em>.</p>
+<p>The <em>setConnected </em>method just changes a boolean flag so that the program can store whether or not it is connected to a serial port or not.</p>
+<p>The <em>CommPort</em> must also be initialized because the port object will be stored here once a successful connection is made.</p>
+<p>The main method of interest here is the <em>open()</em> method.&nbsp;
+ This instructs the program to open the port, and this method will 
+return the object for the opened port, which I store in in the 
+previously initialized <em>CommPort </em>object.&nbsp; I then cast this object as a <em>SerialPort</em> and store it as well.&nbsp; This is helpful for accessing the methods and variables specific to the <em>SerialPort</em> class.</p>
+<p>It should also be noted that the <em>open()</em> method requires the use of a try-catch block.&nbsp; So applying that, I catch two different exceptions.&nbsp; The <em>PortInUseException</em>
+ is what the name says.&nbsp; If the port is in use, then this exception
+ is thrown.&nbsp; The next catch block is just for the generic 
+exceptions that occur.&nbsp; I never came across that during testing, 
+nor do I know how to replicate that.</p>
+<p>I neglected to include any code for setting the baud rate and other 
+settings on the XBee’s (see Hardware Configuration), because I already 
+set those parameters previously using X-CTU (more on setting up XBee’s 
+here).</p>
+<h1>Initializing the Input and Output Streams</h1>
+<p>This method is pretty short and is pretty straightforward to read.</p>
+<div style="background-color: white; color: black;">
+<pre style="font-size: 11px;">    <span style="color: green;">//open the input and output streams</span>
+    <span style="color: green;">//pre style="font-size: 11px;": an open port</span>
+    <span style="color: green;">//post: initialized input and output streams for use to communicate data</span>
+    <span style="color: blue;">public</span> <span style="color: blue;">boolean</span> initIOStream()
+    {
+        <span style="color: green;">//return value for whether opening the streams is successful or not</span>
+        <span style="color: blue;">boolean</span> successful = <span style="color: blue;">false</span>;
+
+        <span style="color: blue;">try</span> {
+            <span style="color: green;">//</span>
+            input = serialPort.getInputStream();
+            output = serialPort.getOutputStream();
+            writeData(0, 0);
+
+            successful = <span style="color: blue;">true</span>;
+            <span style="color: blue;">return</span> successful;
+        }
+        <span style="color: blue;">catch</span> (IOException e) {
+            logText = <span style="color: rgb(163, 21, 21);">"I/O Streams failed to open. ("</span> + e.toString() + <span style="color: rgb(163, 21, 21);">")"</span>;
+            window.txtLog.setForeground(Color.red);
+            window.txtLog.append(logText + <span style="color: rgb(163, 21, 21);">"\n"</span>);
+            <span style="color: blue;">return</span> successful;
+        }
+    }</pre>
+</div>
+<p>The streams are initialized by returning the input and output streams
+ of the open serial port.&nbsp; In order for the serial port object to 
+not be null, it must store the object for the open serial port.</p>
+<p>The <em>getInputStream()</em> and <em>getOutputStream()</em> methods both require a try-catch block.&nbsp; The important exception to catch here is the <em>IOException</em>
+ to signify whether the streams failed to open or not.&nbsp; For more 
+information see How to Open A Serial Port in the Reference Material.</p>
+<p>I also call a method called <em>writeData(0, 0)</em>.&nbsp; This is 
+the method that encapsulates the code required to write serial 
+data.&nbsp; More on that later.&nbsp; Right now it is just used to set 
+variables on the microcontroller side to zero.</p>
+<h1>Setting Up Event Listeners to Read Data</h1>
+<p>Once the port is open, the serial port must know whenever there is 
+data to be read.&nbsp; This approach is event driven rather than by 
+polling.&nbsp; When the event is hit, a special block of code will 
+run.&nbsp; This is advantageous to polling because polling requires 
+constantly asking if data is available.&nbsp; The code for the event 
+driven approach is below.&nbsp; See Event Based Two Way Communication 
+for more information.</p>
+<div style="background-color: white; color: black;">
+<pre style="font-size: 11px;">    <span style="color: green;">//starts the event listener that knows whenever data is available to be read</span>
+    <span style="color: green;">//pre style="font-size: 11px;": an open serial port</span>
+    <span style="color: green;">//post: an event listener for the serial port that knows when data is received</span>
+    <span style="color: blue;">public</span> <span style="color: blue;">void</span> initListener()
+    {
+        <span style="color: blue;">try</span>
+        {
+            serialPort.addEventListener(<span style="color: blue;">this</span>);
+            serialPort.notifyOnDataAvailable(<span style="color: blue;">true</span>);
+        }
+        <span style="color: blue;">catch</span> (TooManyListenersException e)
+        {
+            logText = <span style="color: rgb(163, 21, 21);">"Too many listeners. ("</span> + e.toString() + <span style="color: rgb(163, 21, 21);">")"</span>;
+            window.txtLog.setForeground(Color.red);
+            window.txtLog.append(logText + <span style="color: rgb(163, 21, 21);">"\n"</span>);
+        }
+    }</pre>
+</div>
+<p>The code here is pretty much the whole reason why this class implements <em>SerialPortEventListener</em>.&nbsp; The parameter for adding the event listener is just the object itself.&nbsp; The base class has a method called <em>serialEvent(event)</em>
+ that should be overridden before the event code will work.&nbsp; 
+Overriding that method defines what happens when the event is hit.</p>
+<p>The method <em>addEventListener(this)</em> is the event that is always checking for <em>SerialEvents</em>.&nbsp;
+ It isn’t really important to know what the events actually are, just 
+that the one we’re interested in is the one that tells us whenever data 
+is received.&nbsp; Adding the event listener is complemented by the 
+method <em>notifyOnDataAvailable(true)</em>, which definitely helps us achieve what I mentioned previously.</p>
+<p>This code requires a try-catch box.&nbsp; The exception here is that 
+there may be too many event listeners.&nbsp; I only use one in the code,
+ so this exception should never be hit.</p>
+<h1>Disconnecting from the Serial Port</h1>
+<p>Once all the communication is completed, the serial port must be 
+disconnected.&nbsp; In some instances, some ports stay stuck open, which
+ isn’t exactly a good thing.</p>
+<div style="background-color: white; color: black;">
+<pre style="font-size: 11px;">    <span style="color: green;">//disconnect the serial port</span>
+    <span style="color: green;">//pre style="font-size: 11px;": an open serial port</span>
+    <span style="color: green;">//post: closed serial port</span>
+    <span style="color: blue;">public</span> <span style="color: blue;">void</span> disconnect()
+    {
+        <span style="color: green;">//close the serial port</span>
+        <span style="color: blue;">try</span>
+        {
+            writeData(0, 0);
+
+            serialPort.removeEventListener();
+            serialPort.close();
+            input.close();
+            output.close();
+            setConnected(<span style="color: blue;">false</span>);
+            window.keybindingController.toggleControls();
+
+            logText = <span style="color: rgb(163, 21, 21);">"Disconnected."</span>;
+            window.txtLog.setForeground(Color.red);
+            window.txtLog.append(logText + <span style="color: rgb(163, 21, 21);">"\n"</span>);
+        }
+        <span style="color: blue;">catch</span> (Exception e)
+        {
+            logText = <span style="color: rgb(163, 21, 21);">"Failed to close "</span> + serialPort.getName()
+                              + <span style="color: rgb(163, 21, 21);">"("</span> + e.toString() + <span style="color: rgb(163, 21, 21);">")"</span>;
+            window.txtLog.setForeground(Color.red);
+            window.txtLog.append(logText + <span style="color: rgb(163, 21, 21);">"\n"</span>);
+        }
+    }</pre>
+</div>
+<p>The code here requires a try-catch block so there it is.&nbsp; The exception to catch here is pretty generic.</p>
+<p>Before closing the port, I reset the data on the 
+microcontroller.&nbsp; That step is optional depending on the 
+application.&nbsp; For example, if the value sent to the microcontroller
+ is controlling the speed of a motor, I’d want the motor to turn off if I
+ turn off the remote control.</p>
+<p>The event listener should be removed as it is no longer needed.</p>
+<p>The method to close the port is the <em>close()</em> method.</p>
+<p>The input and output streams should also be closed via the same method as above.</p>
+<p>See How to Close A Serial Port in the Reference section for more information.</p>
+<h1>Reading Data – The <em>serialEvent</em> Method</h1>
+<p>This is a follow-up to the section on preparing to Read Data.&nbsp; 
+It has information on how to process the data that the program reads.</p>
+<div style="background-color: white; color: black;">
+<pre style="font-size: 11px;">    <span style="color: green;">//what happens when data is received</span>
+    <span style="color: green;">//pre style="font-size: 11px;": serial event is triggered</span>
+    <span style="color: green;">//post: processing on the data it reads</span>
+    <span style="color: blue;">public</span> <span style="color: blue;">void</span> serialEvent(SerialPortEvent evt) {
+        <span style="color: blue;">if</span> (evt.getEventType() == SerialPortEvent.DATA_AVAILABLE)
+        {
+            <span style="color: blue;">try</span>
+            {
+                <span style="color: blue;">byte</span> singleData = (<span style="color: blue;">byte</span>)input.read();
+
+                <span style="color: blue;">if</span> (singleData != NEW_LINE_ASCII)
+                {
+                    logText = <span style="color: blue;">new</span> String(<span style="color: blue;">new</span> <span style="color: blue;">byte</span>[] {singleData});
+                    window.txtLog.append(logText);
+                }
+                <span style="color: blue;">else</span>
+                {
+                    window.txtLog.append(<span style="color: rgb(163, 21, 21);">"\n"</span>);
+                }
+            }
+            <span style="color: blue;">catch</span> (Exception e)
+            {
+                logText = <span style="color: rgb(163, 21, 21);">"Failed to read data. ("</span> + e.toString() + <span style="color: rgb(163, 21, 21);">")"</span>;
+                window.txtLog.setForeground(Color.red);
+                window.txtLog.append(logText + <span style="color: rgb(163, 21, 21);">"\n"</span>);
+            }
+        }
+    }</pre>
+</div>
+<p>Since we only want to read data if it exists, we test the condition 
+in the if statement above.&nbsp; This could be redundant because we 
+wouldn’t be in this method if the event never got triggered.</p>
+<p>Reading the data requires a try-catch block.&nbsp; The <em>read()</em>
+ method returns an integer, but the value in it is actually a byte value
+ so this is casted to a byte, in which I store in a variable called <em>singleData</em>.&nbsp;
+ When I was testing this code before, I noticed that the data being read
+ would always have random new line characters in it, and I never knew 
+why this happened.&nbsp; I never wrote any new line characters.&nbsp; 
+Since I don’t want these, I add an if condition saying that if it 
+encounters that, don’t display that data on the screen.</p>
+<p>Java also has a nice way of converting bytes to a string.&nbsp; A 
+byte array can be used as a parameter when initializing a string, which 
+is what I’ve done when I assign a value to <em>logText</em>.&nbsp; See Converting byte to String for more information.</p>
+<p>The exception here is just the usual generic one.</p>
+<h1>Writing Data</h1>
+<p>Here is the method for writing data.&nbsp; In my application, I am 
+writing two integers sequentially to my microcontroller.&nbsp; Data that
+ is sent to the MCU can be used for such things such as controlling 
+motor speeds, which is what I am trying to do here.&nbsp; I hope to use 
+the data sent do control the PWM duty cycle of the motor for speed 
+control.</p>
+<div style="background-color: white; color: black;">
+<pre style="font-size: 11px;">    <span style="color: green;">//method that can be called to send data</span>
+    <span style="color: green;">//pre style="font-size: 11px;": open serial port</span>
+    <span style="color: green;">//post: data sent to the other device</span>
+    <span style="color: blue;">public</span> <span style="color: blue;">void</span> writeData(<span style="color: blue;">int</span> leftThrottle, <span style="color: blue;">int</span> rightThrottle)
+    {
+        <span style="color: blue;">try</span>
+        {
+            output.write(leftThrottle);
+            output.flush();
+            <span style="color: green;">//this is a delimiter for the data</span>
+            output.write(DASH_ASCII);
+            output.flush();
+
+            output.write(rightThrottle);
+            output.flush();
+            <span style="color: green;">//will be read as a byte so it is a space key</span>
+            output.write(SPACE_ASCII);
+            output.flush();
+        }
+        <span style="color: blue;">catch</span> (Exception e)
+        {
+            logText = <span style="color: rgb(163, 21, 21);">"Failed to write data. ("</span> + e.toString() + <span style="color: rgb(163, 21, 21);">")"</span>;
+            window.txtLog.setForeground(Color.red);
+            window.txtLog.append(logText + <span style="color: rgb(163, 21, 21);">"\n"</span>);
+        }
+    }</pre>
+</div>
+<p>The <em>write() </em>method here requires a try-catch block just like
+ many of the other methods used for serial communication.&nbsp; Using 
+the output stream, I call that method to write an integer value.&nbsp; I
+ also write a dash and a space to separate the actual data being 
+read.&nbsp; See the ASCII Table for the values of what these characters 
+should be.&nbsp; This helps me differentiate the sets of data that is 
+sent back and forth.&nbsp; The dash separates the two integers being 
+sent and the space separates the entire set.&nbsp; On the Arduino end, 
+four called to <em>read()</em> can separate the data without mixing things up.&nbsp; Example of that later.</p>
+<h1>Putting All the Java Code Together</h1>
+<p>Once all these methods are setup, they need to be called somewhere in
+ the program so we can put them to use.&nbsp; When the program starts, 
+the code for searching for serial ports will run so that it can populate
+ the combo box on the GUI.&nbsp; The GUI buttons also need to be 
+disabled to reflect the fact they should be disabled when there is no 
+connection to a port.&nbsp; When the connect button is pressed, the 
+input and output streams are started and the event listener is 
+added.&nbsp; The code for that is shown below.</p>
+<div style="background-color: white; color: black;">
+<pre style="font-size: 11px;">    <span style="color: blue;">private</span> <span style="color: blue;">void</span> btnConnectActionPerformed(java.awt.event.ActionEvent evt) {
+        communicator.connect();
+        <span style="color: blue;">if</span> (communicator.getConnected() == <span style="color: blue;">true</span>)
+        {
+            <span style="color: blue;">if</span> (communicator.initIOStream() == <span style="color: blue;">true</span>)
+            {
+                communicator.initListener();
+            }
+        }
+    }</pre>
+</div>
+<p>The if statement is needed such that the code will not run if a 
+successful connection was not made.&nbsp; This is the precondition for 
+the <em>initIOStream() </em>and the <em>initLIstener() </em>methods.</p>
+<p>When the user decides to disconnect from the serial port, the user only needs to call the <em>disconnect()</em> method when the disconnect button is pressed.</p>
+<p>The up/down arrows on my GUI are set to write data to the serial port
+ when they are pressed.&nbsp; When data is written to the Arduino, the 
+MCU will send the data back to the Java program, which will signal the 
+event listener to display that data back to the screen.</p>
+<h1>Arduino Code</h1>
+<p>The Arduino code is pretty straight forward.&nbsp; There are just a few calls to the <em>read()</em> method.</p>
+<p>Update 6 May 2012: the syntax for the Arduino code has updated since the writing of this article. &nbsp;Apparently, the lines</p>
+<pre>Serial.print(separator, BYTE);
+Serial.print(space, BYTE);</pre>
+<p>are no longer valid and have since been replaced by the following:</p>
+<pre>Serial.write(byte(separator));
+Serial.write(byte(space));</pre>
+<p>The code below hasn’t been edited with this change, but basically the
+ code required for writing a byte value through serial communication has
+ changed.</p>
+<div style="background-color: white; color: black;">
+<pre style="font-size: 11px;"><span style="color: green;">// this is where we will put our data</span>
+<span style="color: blue;">int</span> left = 0;
+<span style="color: blue;">int</span> right = 0;
+<span style="color: blue;">byte</span> space = 0;
+<span style="color: blue;">byte</span> separator = 0;
+
+<span style="color: blue;">void</span> setup(){
+  <span style="color: green;">// Start up our serial port, we configured our XBEE devices for 38400 bps. </span>
+  Serial.begin(9200);
+}
+
+<span style="color: blue;">void</span> loop(){
+  <span style="color: green;">// handle serial data, if any</span>
+  <span style="color: blue;">if</span> (Serial.available() &gt;= 4){
+    left = Serial.read();
+    separator = Serial.read();
+    right = Serial.read();
+    space = Serial.read();
+    Serial.flush();
+
+    Serial.print(left);
+    Serial.print(separator, BYTE);
+    Serial.print(right);
+    Serial.print(space, BYTE);
+    Serial.print(<span style="color: rgb(163, 21, 21);">"\n"</span>);
+  }
+}</pre>
+</div>
+<p>I first declare four variables to reflect the fact that I’m writing four different variables to the serial port.</p>
+<p>In the loop method, I added a condition which will check whether 
+there are four pieces of data available before reading them.&nbsp; This 
+again reflects the fact I’m writing four values.</p>
+<p>The four variables initially declared store the values in the order 
+that they are written, and then are just printed to the screen.</p>
+<p>The <em>print()</em> method is able to convert the byte value to an actual character by adding a second parameter called <em>BYTE</em>.&nbsp;
+ The left and right variables don’t need it because the values written 
+were integers to begin with, however, the dash and space characters were
+ written as ASCII values.</p>
+<p>For more information about Arduino and Java, and Arduino’s Serial library, please refer to those in the Reference Section.</p>
+<h1>Code Downloads</h1>
+<p>Here are the code downloads for the GUI, key bindings and the serial 
+communication.&nbsp; WordPress doesn’t allow uploads of zip or java 
+files so I uploaded it all to Megaupload.</p>
+<p>Link to download:&nbsp;<a href="http://www.mediafire.com/?z2l26ncypmzn20z" target="_blank">http://www.mediafire.com/?z2l26ncypmzn20z</a></p>
+<h1>Other Examples</h1>
+<p>There are also other sites I looked at which had example code for 
+serial port communication in Java.&nbsp; The sites are Programming 
+Serial and Parallel Ports and Serial Port Access Using RXTX in Java, 
+which are both in the Reference section.</p>
+<h1>Reference Material</h1>
+<p>Below are a bunch of links to reference sites that I used to find 
+some of the information written here.&nbsp; I mostly referred to bits 
+and pieces of each article to understand the serial code and to come up 
+with the example I present here.&nbsp; The list is in the order that I 
+referenced them.</p>
+<h2>Interface Enumeration</h2>
+<p><a href="http://download.oracle.com/javase/1.4.2/docs/api/java/util/Enumeration.html" target="_blank">http://download.oracle.com/javase/1.4.2/docs/api/java/util/Enumeration.html</a></p>
+<p>Not really a reference article for serial programming specifically, 
+but the article discusses what an Enumeration is and the methods that 
+are provided by them.&nbsp; I wasn’t aware of the existence of this 
+class before (I’m pretty much learning Java), so this article helped me.</p>
+<h2>Discovering Available Comm Ports</h2>
+<p><a href="http://rxtx.qbang.org/wiki/index.php/Discovering_available_comm_ports" target="_blank">http://rxtx.qbang.org/wiki/index.php/Discovering_available_comm_ports</a></p>
+<p>The code on this page is pretty specific to the title of this heading, and the code is pretty easy to follow.</p>
+<h2>How to Open A Serial Port</h2>
+<p><a target="_blank">http://embeddedfreak.wordpress.com/2008/08/08/how-to-open-serial-port-using-rxtx/</a></p>
+<p>This page provides a very concise and detailed explanation on what 
+each line of code does in order to get a serial port open.&nbsp; 
+Definitely work a look if you’re trying to understand the code.</p>
+<h2>Event Based Two Way Communication</h2>
+<p><a href="http://rxtx.qbang.org/wiki/index.php/Event_Based_Two_Way_Communication" target="_blank">http://rxtx.qbang.org/wiki/index.php/Event_Based_Two_Way_Communication</a></p>
+<p>This page has example code on how to connect to a serial port and how
+ to interact with it.&nbsp; The code here uses events, rather than 
+polling, to send data back and forth, which means that whenever data is 
+received, the event code is triggered.</p>
+<h2>How to Close A Serial Port</h2>
+<p><a target="_blank">http://embeddedfreak.wordpress.com/2008/08/08/how-to-close-serial-port-in-rxtx/</a></p>
+<p>This article is written by the same author who wrote the article on how to open serial ports.&nbsp; Good example code here.</p>
+<h2>Converting byte to String</h2>
+<p><a href="http://www.javadb.com/convert-byte-to-string" target="_blank">http://www.javadb.com/convert-byte-to-string</a></p>
+<p>Just some code on how to convert a byte to a String.&nbsp; Useful 
+because serial data is in bytes, and the bytes can be converted to 
+Strings to make them easier to manage and for displaying on the screen.</p>
+<h2>ASCII Table</h2>
+<p><a href="http://www.asciitable.com/" target="_blank">http://www.asciitable.com/</a></p>
+<p>Having the ASCII Table is quite handy for serial data because data 
+being sent and written are bytes, so being able to know what byte values
+ correspond to what character really helps.</p>
+<h2>Arduino and Java</h2>
+<p><a href="http://www.arduino.cc/playground/Interfacing/Java" target="_blank">http://www.arduino.cc/playground/Interfacing/Java</a></p>
+<p>This article discusses how to use the serial port communication with 
+Java and Arduino, which is exactly what I am after.&nbsp; It has example
+ code on pretty much the entire process of serial port communication, 
+but it may be too much to read since there is little explanation about 
+the code.</p>
+<h2>Arduino Serial Class</h2>
+<p><a href="http://arduino.cc/en/Reference/Serial" target="_blank">http://arduino.cc/en/Reference/Serial</a></p>
+<p>A good reference for Arduino’s Serial class methods.&nbsp; Also has example code to look at.</p>
+<h2>Programming Serial and Parallel Ports</h2>
+<p><a href="https://docs.google.com/viewer?url=http%3A%2F%2Fjava.sun.com%2Fdeveloper%2FBooks%2Fjavaprogramming%2Fcookbook%2F11.pdf" target="_blank">https://docs.google.com/viewer?url=http%3A%2F%2Fjava.sun.com%2Fdeveloper%2FBooks%2Fjavaprogramming%2Fcookbook%2F11.pdf</a></p>
+<p>This article provides a brief introduction to programming serial 
+ports and has information on the steps required to talk to the serial 
+port.&nbsp; However, the code examples in there may be hard to follow 
+for someone new to serial programming.</p>
+<h2>Serial Port Access Using RXTX in Java</h2>
+<p><a href="http://gomultidomain.blogspot.com/2008/06/serial-port-access-using-rxtx-in-java.html" target="_blank">http://gomultidomain.blogspot.com/2008/06/serial-port-access-using-rxtx-in-java.html</a></p>
+<p>This page also has complete code for serial communication in Java, 
+but what I was looking for here was how to use the write method to send 
+serial data from Java.</p>
+<div id="jp-post-flair" class="sharedaddy sd-like-enabled sd-sharing-enabled"><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-facebook"><a rel="nofollow" class="share-facebook sd-button share-icon" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?share=facebook&amp;nb=1" title="Share on Facebook" id="sharing-facebook-566"><span>Facebook<span class="share-count">21</span></span></a></li><li class="share-google-plus-1"><div class="googleplus1_button"><div style="height: 20px; width: 90px; display: inline-block; text-indent: 0pt; margin: 0pt; padding: 0pt; background: none repeat scroll 0% 0% transparent; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline;" id="___plusone_0"><iframe title="+1" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/fastbutton.html" name="I0_1345030894818" id="I0_1345030894818" vspace="0" tabindex="0" style="position: static; top: 0pt; width: 90px; margin: 0px; border-style: none; left: 0pt; visibility: visible; height: 20px;" marginwidth="0" marginheight="0" hspace="0" allowtransparency="true" frameborder="0" scrolling="no" width="100%"></iframe></div></div></li><li class="share-linkedin"><a rel="nofollow" class="share-linkedin sd-button share-icon" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?share=linkedin&amp;nb=1" title="Click to share on LinkedIn" id="sharing-linkedin-566"><span>LinkedIn</span></a></li><li class="share-twitter"><a rel="nofollow" class="share-twitter sd-button share-icon" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?share=twitter&amp;nb=1" title="Click to share on Twitter" id="sharing-twitter-566"><span>Twitter<span class="share-count">1</span></span></a></li><li class="share-print"><a rel="nofollow" class="share-print sd-button share-icon" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#print" title="Click to print"><span>Print</span></a></li><li class="share-end"></li></ul><div class="sharing-clear"></div></div></div></div><div class="wpl-likebox sd-block sd-like"><h3 class="sd-title">Like this:</h3><div class="sd-content"><div id="like-566" class="wpl-button "><a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?like=1&amp;_wpnonce=08f8ae9587" title="I like this." class="like needs-login sd-button" rel="nofollow"><span>Like</span></a></div><div class="wpl-count sd-like-count">Be the first to like this.</div></div></div></div>			</div><!-- .entry -->
+
+	
+	
+</div><!-- .post-wrapper -->
+						<div class="post-utility">
+							<p class="details">
+								Posted on January 1, 2011, in <a href="http://henrypoon.wordpress.com/category/computer-stuff/" title="View all posts in computer stuff" rel="category tag">computer stuff</a>. Bookmark the <a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/" title="Permalink to Serial Communication in Java with Example&nbsp;Program" rel="bookmark">permalink</a>.								<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comments" title="Comment on Serial Communication in Java with Example&nbsp;Program">48 Comments</a>.															</p>
+						</div><!-- .post-utility -->
+
+						<div class="post-navigation nav-below">
+							<div class="nav-previous">
+								<a href="http://henrypoon.wordpress.com/2010/12/30/diagnosing-the-source-of-internet-connectivity-problems/" rel="prev">← Diagnosing the Source of Internet Connectivity&nbsp;Problems</a>							</div>
+							<div class="nav-next">
+								<a href="http://henrypoon.wordpress.com/2011/01/02/2010-in-review/" rel="next">2010 in&nbsp;Review →</a>							</div>
+						</div><!-- .post-navigation -->
+
+					
+<div id="post-extra-content" class="clear-block">
+	
+		<div id="secondary-tabs">
+		<ul class="comment-tabs">
+						<li class="leave-a-comment">
+				<h3 class="comment-tab-title">
+					<a href="#respond" title="Leave a reply"> Leave a Comment</a>
+				</h3>
+			</li>
+												<li>
+				<h3 class="comment-tab-title">
+					<a href="#comments">Comments (48)</a>
+				</h3>
+			</li>
+					</ul><!-- .comment-tabs -->
+	</div><!-- #secondary-tabs -->
+
+
+	
+	
+		
+
+		<div id="commentlist">
+
+			<ol id="comments">
+								<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-198">
+		<div id="comment-198" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-0344900f63bf7eab0ba43e4a95a27543-0" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/0344900f63bf7eab0ba43e4a95a27543.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn">Z.K.</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-198">
+				April 24, 2011 at 11:13 am</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>I really like your article and it cleared up a few things for me, 
+but some of the code is cut off because your web page is not wide 
+enough.</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=198#respond" onclick='return addComment.moveForm("comment-198", "198", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+<ul class="children">
+	<li class="comment byuser comment-author-henrypoon bypostauthor odd alt depth-2 highlander-comment" id="li-comment-199">
+		<div id="comment-199" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-c80187c10f5cfbe9905001a1b8df16c7-0" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/c80187c10f5cfbe9905001a1b8df16c7.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn"><a href="http://henrypoon.wordpress.com/" rel="external nofollow" class="url">hp</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-199">
+				April 26, 2011 at 8:29 am</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>Thanks for letting me know!<br>
+I hadn’t realized that the code got cut off.  It must have been because I keep changing my blog template.<br>
+It should be fixed now.  I made the text smaller.</p>
+<p>My apologies for not responding earlier.  I wasn’t home for the past few days.</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=199#respond" onclick='return addComment.moveForm("comment-199", "199", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+</li>
+</ul>
+</li>
+	<li class="comment even thread-odd thread-alt depth-1 highlander-comment" id="li-comment-205">
+		<div id="comment-205" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-05b5e1c864cfc4c7bb21f9e405392bef-0" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/05b5e1c864cfc4c7bb21f9e405392bef.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn">Z.K.</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-205">
+				May 8, 2011 at 12:33 pm</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>Actually, it is still cut off though not as bad.  I did download 
+the code though so I guess it is not a big deal.  Perhaps you should 
+make your code blocks scrollable.  It is not that hard to do in CSS.</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=205#respond" onclick='return addComment.moveForm("comment-205", "205", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+</li>
+	<li class="comment odd alt thread-even depth-1 highlander-comment" id="li-comment-261">
+		<div id="comment-261" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-4c474503c0dc5f2e4aa43864ca20508e-0" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/4c474503c0dc5f2e4aa43864ca20508e.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn">Sarah</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-261">
+				July 21, 2011 at 1:52 pm</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>Your article is very helpful and really good, I have downloaded 
+your code and try one my arduino Duemilanove. But I found a small bug, 
+when I click the buttons, sometimes it works well as 0-0,0-5,0-10(when I
+ click the right button), but sometimes it comes conversely as 
+0-0,5-0,10-0 when I do the same command. I don’t know why, have you met 
+this question?</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=261#respond" onclick='return addComment.moveForm("comment-261", "261", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+<ul class="children">
+	<li class="comment byuser comment-author-henrypoon bypostauthor even depth-2 highlander-comment" id="li-comment-262">
+		<div id="comment-262" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-c80187c10f5cfbe9905001a1b8df16c7-1" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/c80187c10f5cfbe9905001a1b8df16c7.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn"><a href="http://henrypoon.wordpress.com/" rel="external nofollow" class="url">hp</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-262">
+				July 21, 2011 at 1:58 pm</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>Hi, thanks for your comment.  I don’t think I’ve noticed anything 
+of that sort happening, but it could be entirely possible and it sounds 
+like something that happens consistently.  I did have some problems 
+before with the numbers not updating correctly and I thought I had fixed
+ it, but I could be wrong.  It could be that something went awry during 
+the serial communication.  As far as I know (I am trying to remember 
+since I wrote this quite a while ago), the code explicitly says to 
+update the right most throttle when the button to accelerate the right 
+side is pressed, so it is really strange to see the opposite happen.  I 
+would like to take a look and try it for myself, but I will be a little 
+bit busy for the next little while, so I don’t know if I will be able to
+ do that.  If you do find a fix for it, please let me know!</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=262#respond" onclick='return addComment.moveForm("comment-262", "262", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+<ul class="children">
+	<li class="comment odd alt depth-3 highlander-comment" id="li-comment-264">
+		<div id="comment-264" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-4c474503c0dc5f2e4aa43864ca20508e-1" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/4c474503c0dc5f2e4aa43864ca20508e.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn">Sarah</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-264">
+				July 22, 2011 at 6:54 am</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>No problem,if I find a solution,I’ll tell you.  Your code is very 
+helpful to me as I want to control my robot and distance sensor over 
+internet by java, but I also want to control it globally, that means I 
+may have to do it by web interface(jsp or something) or by applet. Do 
+you have some advise?</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+</li>
+	<li class="comment byuser comment-author-henrypoon bypostauthor even depth-3 highlander-comment" id="li-comment-266">
+		<div id="comment-266" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-c80187c10f5cfbe9905001a1b8df16c7-2" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/c80187c10f5cfbe9905001a1b8df16c7.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn"><a href="http://henrypoon.wordpress.com/" rel="external nofollow" class="url">hp</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-266">
+				July 24, 2011 at 11:14 am</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>Thanks for your compliment!<br>
+If I were to do something like that, I wouldn’t know how to do it as far
+ as coding specifics go (I’ve never done anything like that before), but
+ I’m relatively certain that there are libraries available to handle 
+communication through the internet, but I’m not sure as to how you’d go 
+from a remote computer to the robot.  Maybe one way is to go from a 
+client computer —-&gt; server (with the serial comm stuff) —&gt; robot, 
+and then that way you could handle the net code separately from the 
+serial code.  I’m really not sure as to how feasible this method is or 
+whether there are better alternative methods available.  I just thought 
+of it, but never tried it.</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+</li>
+</ul>
+</li>
+</ul>
+</li>
+	<li class="comment odd alt thread-odd thread-alt depth-1 highlander-comment" id="li-comment-333">
+		<div id="comment-333" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-6dd0f841f719dd13b8a70223f3b04b22-0" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/6dd0f841f719dd13b8a70223f3b04b22.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn">randomDude</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-333">
+				September 24, 2011 at 10:59 pm</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>How do i compile this? javac Communicator.java gives me errors.</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=333#respond" onclick='return addComment.moveForm("comment-333", "333", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+<ul class="children">
+	<li class="comment byuser comment-author-henrypoon bypostauthor even depth-2 highlander-comment" id="li-comment-334">
+		<div id="comment-334" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-c80187c10f5cfbe9905001a1b8df16c7-3" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/c80187c10f5cfbe9905001a1b8df16c7.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn"><a href="http://henrypoon.wordpress.com/" rel="external nofollow" class="url">hp</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-334">
+				September 25, 2011 at 12:19 am</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>It might be because RXTX hasn’t been configured properly as of 
+yet.  I’ve also posted a how-to on this on the blog, and it is located 
+here: <a href="http://henrypoon.wordpress.com/2010/12/25/installing-rxtx-for-serial-communication-with-java/" rel="nofollow">http://henrypoon.wordpress.com/2010/12/25/installing-rxtx-for-serial-communication-with-java/</a></p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=334#respond" onclick='return addComment.moveForm("comment-334", "334", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+</li>
+</ul>
+</li>
+	<li class="comment odd alt thread-even depth-1 highlander-comment" id="li-comment-464">
+		<div id="comment-464" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-fe3aea290fb7abbc08bc8463965cea48-0" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/fe3aea290fb7abbc08bc8463965cea48.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn">chanakya</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-464">
+				January 3, 2012 at 5:30 am</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>hi,this code is very helpful.but i  want the GUI class code.please help me??????</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=464#respond" onclick='return addComment.moveForm("comment-464", "464", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+<ul class="children">
+	<li class="comment byuser comment-author-henrypoon bypostauthor even depth-2 highlander-comment" id="li-comment-465">
+		<div id="comment-465" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-c80187c10f5cfbe9905001a1b8df16c7-4" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/c80187c10f5cfbe9905001a1b8df16c7.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn"><a href="http://henrypoon.wordpress.com/" rel="external nofollow" class="url">hp</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-465">
+				January 3, 2012 at 2:23 pm</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>Please look at the section called Code Downloads near the bottom of the post.</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=465#respond" onclick='return addComment.moveForm("comment-465", "465", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+</li>
+</ul>
+</li>
+	<li class="comment odd alt thread-odd thread-alt depth-1 highlander-comment" id="li-comment-466">
+		<div id="comment-466" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-fe3aea290fb7abbc08bc8463965cea48-1" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/fe3aea290fb7abbc08bc8463965cea48.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn">chanakya</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-466">
+				January 3, 2012 at 10:27 pm</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>hi,i am doing my project using Xbee Device.i need to send a packet
+ and then receive the response again.is it possible with this code?????</p>
+<p>please suggest me.</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=466#respond" onclick='return addComment.moveForm("comment-466", "466", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+<ul class="children">
+	<li class="comment byuser comment-author-henrypoon bypostauthor even depth-2 highlander-comment" id="li-comment-467">
+		<div id="comment-467" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-c80187c10f5cfbe9905001a1b8df16c7-5" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/c80187c10f5cfbe9905001a1b8df16c7.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn"><a href="http://henrypoon.wordpress.com/" rel="external nofollow" class="url">hp</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-467">
+				January 3, 2012 at 11:30 pm</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>Yes.</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=467#respond" onclick='return addComment.moveForm("comment-467", "467", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+</li>
+</ul>
+</li>
+	<li class="comment odd alt thread-even depth-1 highlander-comment" id="li-comment-484">
+		<div id="comment-484" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-86743a9e58a3c57267125cf1b3717d51-0" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/86743a9e58a3c57267125cf1b3717d51.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn">Lili</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-484">
+				January 23, 2012 at 7:36 am</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>hi, your article is very helpful thanks a lot !! i wanted to 
+download your code but as you surely know megaupload is closed… could 
+you upload your code on an other site ? thank you very much !</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=484#respond" onclick='return addComment.moveForm("comment-484", "484", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+<ul class="children">
+	<li class="comment byuser comment-author-henrypoon bypostauthor even depth-2 highlander-comment" id="li-comment-489">
+		<div id="comment-489" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-c80187c10f5cfbe9905001a1b8df16c7-6" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/c80187c10f5cfbe9905001a1b8df16c7.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn"><a href="http://henrypoon.wordpress.com/" rel="external nofollow" class="url">hp</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-489">
+				January 24, 2012 at 8:24 am</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>Thanks for letting me know! Unfortunately I won’t be able to upload the file until the weekend.</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=489#respond" onclick='return addComment.moveForm("comment-489", "489", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+</li>
+	<li class="comment byuser comment-author-henrypoon bypostauthor odd alt depth-2 highlander-comment" id="li-comment-504">
+		<div id="comment-504" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-c80187c10f5cfbe9905001a1b8df16c7-7" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/c80187c10f5cfbe9905001a1b8df16c7.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn"><a href="http://henrypoon.wordpress.com/" rel="external nofollow" class="url">hp</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-504">
+				January 29, 2012 at 5:13 pm</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>I’ve uploaded a new file to replace the old Megaupload one.  Enjoy!<br>
+<a href="http://www.mediafire.com/?z2l26ncypmzn20z" rel="nofollow">http://www.mediafire.com/?z2l26ncypmzn20z</a></p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=504#respond" onclick='return addComment.moveForm("comment-504", "504", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+</li>
+</ul>
+</li>
+	<li class="comment even thread-odd thread-alt depth-1 highlander-comment" id="li-comment-497">
+		<div id="comment-497" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-ad91d733de5dbcc30d2fd509d33b98e5-0" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/ad91d733de5dbcc30d2fd509d33b98e5.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn">abdul</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-497">
+				January 27, 2012 at 5:53 am</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>hello, when I compile this code I am getting errors for the parts 
+of the code that are related to the GUI window. Here is the error I get:</p>
+<p>Communicator.java:19: cannot find symbol<br>
+symbol  : class GUI<br>
+location: class communicator.Communicator<br>
+    GUI window = null;<br>
+    ^<br>
+Is it possible for me to see the code of the GUI?</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=497#respond" onclick='return addComment.moveForm("comment-497", "497", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+<ul class="children">
+	<li class="comment byuser comment-author-henrypoon bypostauthor odd alt depth-2 highlander-comment" id="li-comment-501">
+		<div id="comment-501" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-c80187c10f5cfbe9905001a1b8df16c7-8" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/c80187c10f5cfbe9905001a1b8df16c7.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn"><a href="http://henrypoon.wordpress.com/" rel="external nofollow" class="url">hp</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-501">
+				January 29, 2012 at 5:11 pm</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>I uploaded a new file that has all the source and it is under the heading “Code Downloads”.  Perhaps that will help you!</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=501#respond" onclick='return addComment.moveForm("comment-501", "501", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+</li>
+</ul>
+</li>
+	<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-498">
+		<div id="comment-498" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-3164b52693842014b526af68113319f8-0" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/3164b52693842014b526af68113319f8.jpeg" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn">Avedo</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-498">
+				January 27, 2012 at 7:10 am</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>Hi! The source code download is not longer available. Could you please over a new one?</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=498#respond" onclick='return addComment.moveForm("comment-498", "498", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+<ul class="children">
+	<li class="comment byuser comment-author-henrypoon bypostauthor odd alt depth-2 highlander-comment" id="li-comment-502">
+		<div id="comment-502" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-c80187c10f5cfbe9905001a1b8df16c7-9" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/c80187c10f5cfbe9905001a1b8df16c7.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn"><a href="http://henrypoon.wordpress.com/" rel="external nofollow" class="url">hp</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-502">
+				January 29, 2012 at 5:11 pm</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>Just uploaded a new one!<br>
+<a href="http://www.mediafire.com/?z2l26ncypmzn20z" rel="nofollow">http://www.mediafire.com/?z2l26ncypmzn20z</a></p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=502#respond" onclick='return addComment.moveForm("comment-502", "502", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+</li>
+</ul>
+</li>
+	<li class="comment even thread-odd thread-alt depth-1 highlander-comment" id="li-comment-500">
+		<div id="comment-500" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-ad91d733de5dbcc30d2fd509d33b98e5-1" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/ad91d733de5dbcc30d2fd509d33b98e5.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn">abdul</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-500">
+				January 28, 2012 at 2:42 am</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>The download link for the code is no longer available. Can you please provide a new link?</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=500#respond" onclick='return addComment.moveForm("comment-500", "500", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+<ul class="children">
+	<li class="comment byuser comment-author-henrypoon bypostauthor odd alt depth-2 highlander-comment" id="li-comment-503">
+		<div id="comment-503" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-c80187c10f5cfbe9905001a1b8df16c7-10" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/c80187c10f5cfbe9905001a1b8df16c7.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn"><a href="http://henrypoon.wordpress.com/" rel="external nofollow" class="url">hp</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-503">
+				January 29, 2012 at 5:12 pm</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>Just uploaded a new one!<br>
+<a href="http://www.mediafire.com/?z2l26ncypmzn20z" rel="nofollow">http://www.mediafire.com/?z2l26ncypmzn20z</a></p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=503#respond" onclick='return addComment.moveForm("comment-503", "503", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+</li>
+</ul>
+</li>
+	<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-515">
+		<div id="comment-515" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-edda1632d0da1ff55745caafa2d1904f-0" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/edda1632d0da1ff55745caafa2d1904f.jpeg" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn"><a href="http://chafflube.wordpress.com/" rel="external nofollow" class="url">Dillon Chaffey</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-515">
+				February 6, 2012 at 5:33 am</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>This is a very insightful post. Thank you very much, it will 
+surely help me begin my serial port communication project, which I have 
+been intending to start for quite some time now.</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=515#respond" onclick='return addComment.moveForm("comment-515", "515", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+<ul class="children">
+	<li class="comment byuser comment-author-henrypoon bypostauthor odd alt depth-2 highlander-comment" id="li-comment-516">
+		<div id="comment-516" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-c80187c10f5cfbe9905001a1b8df16c7-11" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/c80187c10f5cfbe9905001a1b8df16c7.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn"><a href="http://henrypoon.wordpress.com/" rel="external nofollow" class="url">hp</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-516">
+				February 7, 2012 at 11:02 pm</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>Thanks! Glad to be helpful!</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=516#respond" onclick='return addComment.moveForm("comment-516", "516", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+</li>
+</ul>
+</li>
+	<li class="comment even thread-odd thread-alt depth-1 highlander-comment" id="li-comment-541">
+		<div id="comment-541" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-c41faa1d36628fbf54eb445207f7f80c-0" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/c41faa1d36628fbf54eb445207f7f80c.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn">Rick</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-541">
+				March 2, 2012 at 8:03 pm</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>hi, i have question about the arduino pde file, how the arduino is
+ suppose to know which pin it is assigned to perform output since ur 
+codes dont have it ?</p>
+<p>im using bluetooth connection to control 4 directions of a rc car</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=541#respond" onclick='return addComment.moveForm("comment-541", "541", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+<ul class="children">
+	<li class="comment byuser comment-author-henrypoon bypostauthor odd alt depth-2 highlander-comment" id="li-comment-542">
+		<div id="comment-542" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-c80187c10f5cfbe9905001a1b8df16c7-12" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/c80187c10f5cfbe9905001a1b8df16c7.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn"><a href="http://henrypoon.wordpress.com/" rel="external nofollow" class="url">hp</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-542">
+				March 2, 2012 at 9:25 pm</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>The pins involved for the serial communication are the TX and RX 
+pins (should be labeled on the board).  On the Arduino side, there must 
+be code to read the data sent through these pins.</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=542#respond" onclick='return addComment.moveForm("comment-542", "542", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+<ul class="children">
+	<li class="comment even depth-3 highlander-comment" id="li-comment-543">
+		<div id="comment-543" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-c41faa1d36628fbf54eb445207f7f80c-1" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/c41faa1d36628fbf54eb445207f7f80c.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn">Rick</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-543">
+				March 2, 2012 at 10:14 pm</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>could u pls give me some example codes as i’m quite new in this arduino thing <a href="mailto:rickjin88@gmail.com">rickjin88@gmail.com</a>, thanks in advance</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+</li>
+	<li class="comment byuser comment-author-henrypoon bypostauthor odd alt depth-3 highlander-comment" id="li-comment-546">
+		<div id="comment-546" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-c80187c10f5cfbe9905001a1b8df16c7-13" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/c80187c10f5cfbe9905001a1b8df16c7.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn"><a href="http://henrypoon.wordpress.com/" rel="external nofollow" class="url">hp</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-546">
+				March 3, 2012 at 4:29 pm</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>Sorry, but the code is provided as is and I am unable to help on 
+individual requests.  There is already a lot of existing literature on 
+the type of project that you are doing and referring to those will help a
+ lot more.  Thanks for understanding.</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+</li>
+</ul>
+</li>
+</ul>
+</li>
+	<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-544">
+		<div id="comment-544" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-ad91d733de5dbcc30d2fd509d33b98e5-2" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/ad91d733de5dbcc30d2fd509d33b98e5.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn">Abdul12345</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-544">
+				March 3, 2012 at 6:55 am</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>Hello i am using different method for disconnecting from serial 
+port, instead of removeEventLister() i am simply close inputstream and 
+serial port, but this seems to crash the system and hang. any 
+suggestions?</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=544#respond" onclick='return addComment.moveForm("comment-544", "544", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+<ul class="children">
+	<li class="comment byuser comment-author-henrypoon bypostauthor odd alt depth-2 highlander-comment" id="li-comment-545">
+		<div id="comment-545" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-c80187c10f5cfbe9905001a1b8df16c7-14" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/c80187c10f5cfbe9905001a1b8df16c7.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn"><a href="http://henrypoon.wordpress.com/" rel="external nofollow" class="url">hp</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-545">
+				March 3, 2012 at 4:14 pm</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>Sorry, but I have no quick solution to your problem.  My only 
+suggest to you would just to be look online to see what others have done
+ and see if it can shed some light on your problem.  It might help to 
+maybe use a different method for disconnecting a serial port.  Perhaps 
+one that is written in existing literature.</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=545#respond" onclick='return addComment.moveForm("comment-545", "545", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+</li>
+</ul>
+</li>
+	<li class="comment even thread-odd thread-alt depth-1 highlander-comment" id="li-comment-548">
+		<div id="comment-548" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-0008b4137fc0e170a836dc2ee95b1f0d-0" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/0008b4137fc0e170a836dc2ee95b1f0d.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn"><a href="http://kotalwar.in/" rel="external nofollow" class="url">abhishek</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-548">
+				March 9, 2012 at 8:35 pm</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>it give error like package gnu.in does not exit and give 16 error.<br>
+tell me how to run this code</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=548#respond" onclick='return addComment.moveForm("comment-548", "548", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+<ul class="children">
+	<li class="comment byuser comment-author-henrypoon bypostauthor odd alt depth-2 highlander-comment" id="li-comment-559">
+		<div id="comment-559" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-c80187c10f5cfbe9905001a1b8df16c7-15" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/c80187c10f5cfbe9905001a1b8df16c7.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn"><a href="http://henrypoon.wordpress.com/" rel="external nofollow" class="url">hp</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-559">
+				March 23, 2012 at 7:28 pm</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>Probably you have not set up RXTX correctly.  Please refer to <a href="http://henrypoon.wordpress.com/2010/12/25/installing-rxtx-for-serial-communication-with-java/" rel="nofollow">http://henrypoon.wordpress.com/2010/12/25/installing-rxtx-for-serial-communication-with-java/</a></p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=559#respond" onclick='return addComment.moveForm("comment-559", "559", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+</li>
+</ul>
+</li>
+	<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-550">
+		<div id="comment-550" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-66608c14c802096f309de60acfdf7386-0" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/66608c14c802096f309de60acfdf7386.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn">Jose Fakiolas</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-550">
+				March 10, 2012 at 1:50 pm</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>Man thanks a lot for this code!! I used to communicate with my 
+precision GPS Trimble Pathfinder Pro XH, I modified the code because I 
+just want to listen the NMEA output of the GPS. So I erased the part of 
+write and the part of throtle and all that. But now I have to do 
+something very important, I don’t know how : I need that the data I see 
+in the Textarea of the program saved it in a MySQL database, but I don’t
+ know how, because I’m not completely sure what is the variable that has
+ the data, I think is logText. I’m new in Java I don’t have a lot of 
+experience so I need your help. Your code is working great but now I 
+need to save that data in a database. This is the data I received and 
+see in the TextArea (is a NMEA frame): 
+$GPGGA,074106.00,1100.836692,N,07448.486753,W,1,06,1.3,54.11,M,-6.15,M,,*54</p>
+<p>Thanks for your attention.</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=550#respond" onclick='return addComment.moveForm("comment-550", "550", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+<ul class="children">
+	<li class="comment byuser comment-author-henrypoon bypostauthor odd alt depth-2 highlander-comment" id="li-comment-560">
+		<div id="comment-560" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-c80187c10f5cfbe9905001a1b8df16c7-16" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/c80187c10f5cfbe9905001a1b8df16c7.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn"><a href="http://henrypoon.wordpress.com/" rel="external nofollow" class="url">hp</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-560">
+				March 23, 2012 at 7:30 pm</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>I’m glad you found the code helpful!  The text inside a TextArea 
+object should be accessible with the getText method.  JavaDoc link here:
+ <a href="http://docs.oracle.com/javase/1.4.2/docs/api/java/awt/TextArea.html" rel="nofollow">http://docs.oracle.com/javase/1.4.2/docs/api/java/awt/TextArea.html</a></p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=560#respond" onclick='return addComment.moveForm("comment-560", "560", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+</li>
+</ul>
+</li>
+	<li class="comment even thread-odd thread-alt depth-1 highlander-comment" id="li-comment-568">
+		<div id="comment-568" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-4541528453e79a388c4ed9177d2f3030-0" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/4541528453e79a388c4ed9177d2f3030.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn">Vimal</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-568">
+				April 9, 2012 at 7:19 am</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>Hello, I am doing a embedded system project where i need to use 
+the data sent by an external device wirelessly to interface my PC 
+keyboard and mouse (my project is a game keypad design ). So,basically 
+,any key digital key i press on the game pad will reach my computer 
+wirelessly ( i use serial communication) . My major doubts are as 
+follows: 1. Sent data (in bits) reaches the COM port , how do i use them
+ as input and operate my keyboard accordingly? 2.” Robot class ” in JAVA
+ is the best option . But how do i get serial port data as input and 
+program in it ? I read your post  and i found it very interesting . I 
+want to continuously read the incoming COM port data and emulate my 
+keyboard and mouse function using robot class accordingly to my wish … 
+please help me with your suggestions . Thank you !!</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=568#respond" onclick='return addComment.moveForm("comment-568", "568", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+</li>
+	<li class="comment odd alt thread-even depth-1 highlander-comment" id="li-comment-577">
+		<div id="comment-577" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-08abe113405de696dd2d7fa76d0edd9c-0" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/08abe113405de696dd2d7fa76d0edd9c.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn">mr</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-577">
+				April 16, 2012 at 3:59 pm</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>Not findind any device on Windows. Any ideas?</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=577#respond" onclick='return addComment.moveForm("comment-577", "577", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+</li>
+	<li class="comment even thread-odd thread-alt depth-1 highlander-comment" id="li-comment-580">
+		<div id="comment-580" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-81c7b5df6d782a48fd63fe0ce871be2c-0" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/81c7b5df6d782a48fd63fe0ce871be2c.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn">go</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-580">
+				April 29, 2012 at 3:21 pm</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>very helpful! thanks a lot for sharing</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=580#respond" onclick='return addComment.moveForm("comment-580", "580", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+</li>
+	<li class="comment odd alt thread-even depth-1 highlander-comment" id="li-comment-595">
+		<div id="comment-595" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img scale="0" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/imgpress.jpeg" class="avatar avatar-48" height="48" width="48">
+			<cite class="fn"><a href="http://www.facebook.com/profile.php?id=650695332" rel="external nofollow" class="url">Eman K. Abdallah</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-595">
+				May 11, 2012 at 12:02 pm</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>I am using Zigbee cc2530 Texas instruments , i connected it with a
+ serial cable to my PC and display measured data on  GUI using Java , 
+when i run your code the combo box of the ports is disabled so i think 
+it do not see any of the ports , i try to trace the communicator class 
+by adding some print statements i found out that it do not enter the 
+while loop of the<br>
+ while (ports.hasMoreElements())<br>
+I don’t know what’s the problem , and am a beginner with this serial programming<br>
+so pls i need help as soon as possible </p>
+<p>Thnx in advance</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=595#respond" onclick='return addComment.moveForm("comment-595", "595", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+<ul class="children">
+	<li class="comment byuser comment-author-henrypoon bypostauthor even depth-2 highlander-comment" id="li-comment-596">
+		<div id="comment-596" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-c80187c10f5cfbe9905001a1b8df16c7-17" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/c80187c10f5cfbe9905001a1b8df16c7.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn"><a href="http://henrypoon.wordpress.com/" rel="external nofollow" class="url">hp</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-596">
+				May 11, 2012 at 7:27 pm</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>Hmm, I can’t be certain.  Since it’s not entering the loop, that 
+is already a big help.  It does tell you that “ports” has zero elements 
+in it.  Could be something wrong with the way data is being sent?  Maybe
+ “ports” hasn’t been initialized properly?</p>
+<p>It might be a good idea to look at where you have defined the “ports”
+ variable and ensure that there actually is an object there.</p>
+<p>Not sure how much more I can help.</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=596#respond" onclick='return addComment.moveForm("comment-596", "596", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+<ul class="children">
+	<li class="comment odd alt depth-3 highlander-comment" id="li-comment-598">
+		<div id="comment-598" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-aeaa68d511889eac6185660b915eb1cf-0" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/aeaa68d511889eac6185660b915eb1cf.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn"><a href="http://www.facebook.com/profile.php?id=650695332" rel="external nofollow" class="url">Eman K. Abdallah</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-598">
+				May 12, 2012 at 2:13 pm</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>I fixed the problem of the ports , the problem was with the RXTX 
+packages i didn’t install it probably since am using windows , now the 
+problem is i connect to the port i need but it always gives me msg 
+PortInUseExeception it says that the port am using is owned by unkown 
+application.<br>
+Thanx in advance again , and i need to thank u for ur code it is really helpful and comments of the people as well !</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+</li>
+	<li class="comment byuser comment-author-henrypoon bypostauthor even depth-3 highlander-comment" id="li-comment-600">
+		<div id="comment-600" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-c80187c10f5cfbe9905001a1b8df16c7-18" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/c80187c10f5cfbe9905001a1b8df16c7.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn"><a href="http://henrypoon.wordpress.com/" rel="external nofollow" class="url">hp</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-600">
+				May 12, 2012 at 2:41 pm</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>Thanks for your interest in my work! Not sure what can be done to 
+solve the PortInUseException. Might have to look deeper into what 
+Windows is doing to see what device really is using that port. I think 
+now it’s to find what’s hogging the port and to turn it off. Other than 
+that, I’m not sure what to tell you. This issue is very specific to your
+ computer and its configuration.</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+</li>
+</ul>
+</li>
+</ul>
+</li>
+	<li class="comment odd alt thread-odd thread-alt depth-1 highlander-comment" id="li-comment-643">
+		<div id="comment-643" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-b32800b181d19faacf02c6c0bcf3f664-0" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/b32800b181d19faacf02c6c0bcf3f664.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn">Skb</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-643">
+				July 2, 2012 at 8:01 am</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>Hello…would you please tell me…how to select the baudrate or how 
+to make the baudrate =2400…plz help…I am not as genius as you are..so 
+desperately need your kind help…</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=643#respond" onclick='return addComment.moveForm("comment-643", "643", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+<ul class="children">
+	<li class="comment even depth-2 highlander-comment" id="li-comment-646">
+		<div id="comment-646" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-08abe113405de696dd2d7fa76d0edd9c-1" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/08abe113405de696dd2d7fa76d0edd9c.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn">Miguel</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-646">
+				July 4, 2012 at 2:03 am</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p><a href="http://www.java2s.com/Code/JavaAPI/javax.comm/SerialPortsetSerialPortParamsintarg0intarg1intarg2intarg3.htm" rel="nofollow">http://www.java2s.com/Code/JavaAPI/javax.comm/SerialPortsetSerialPortParamsintarg0intarg1intarg2intarg3.htm</a></p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=646#respond" onclick='return addComment.moveForm("comment-646", "646", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+<ul class="children">
+	<li class="comment odd alt depth-3 highlander-comment" id="li-comment-647">
+		<div id="comment-647" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img scale="0" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/imgpress.gif" class="avatar avatar-48" height="48" width="48">
+			<cite class="fn"><a href="http://www.facebook.com/profile.php?id=100002245375332" rel="external nofollow" class="url">Sujoy Kumar Bhattacharya</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-647">
+				July 6, 2012 at 5:58 am</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>Thank you so much Miguel for helping a novice like me…</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+</li>
+</ul>
+</li>
+</ul>
+</li>
+	<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-660">
+		<div id="comment-660" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-2037a9a1fe6fa697443d9a41fc4d85f5-0" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/2037a9a1fe6fa697443d9a41fc4d85f5.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn"><a href="http://www.facebook.com/profile.php?id=100002245375332" rel="external nofollow" class="url">Sujoy Kumar Bhattacharya</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-660">
+				July 19, 2012 at 6:56 am</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>Hello…gnu.io.*; works fine when i run it on netbeans but when i 
+build a .jar file and try to run the .jar file it deos’nt work, why?? 
+plz help…<br>
+u ppl r genius ..plz help a novice like me….thanks in advance..</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=660#respond" onclick='return addComment.moveForm("comment-660", "660", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+</li>
+	<li class="comment odd alt thread-odd thread-alt depth-1 highlander-comment" id="li-comment-675">
+		<div id="comment-675" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-3a340353cf3378e611e9055a5a77fbbc-0" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/3a340353cf3378e611e9055a5a77fbbc.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn">psilva</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-675">
+				July 27, 2012 at 6:26 pm</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>Hi I am new to java, how to compile this code?<br>
+thank you</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=675#respond" onclick='return addComment.moveForm("comment-675", "675", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+</li>
+	<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-681">
+		<div id="comment-681" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-877270dff878b5258a3b644b5035dd1d-0" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/877270dff878b5258a3b644b5035dd1d.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn">Nicolas</cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-681">
+				August 1, 2012 at 3:08 am</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>In order to have the log text auto-scrolled, you can add (at the end of serialEvent in Communicator.java):<br>
+try {<br>
+window.txtLog.scrollRectToVisible(window.txtLog.modelToView(window.txtLog.getDocument().getLength ()));<br>
+}<br>
+catch (javax.swing.text.BadLocationException err) {}</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=681#respond" onclick='return addComment.moveForm("comment-681", "681", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+<ul class="children">
+	<li class="comment byuser comment-author-henrypoon bypostauthor odd alt depth-2 highlander-comment" id="li-comment-683">
+		<div id="comment-683" class="tiptrigger">
+		<div class="comment-head comment-author vcard">
+			<img id="grav-c80187c10f5cfbe9905001a1b8df16c7-19" scale="1.5" originals="48" alt="" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/c80187c10f5cfbe9905001a1b8df16c7.png" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48">
+			<cite class="fn"><a href="http://henrypoon.wordpress.com/" rel="external nofollow" class="url">hp</a></cite>
+
+			<span class="comment-meta commentmetadata">
+				|
+				<a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#comment-683">
+				August 1, 2012 at 7:22 pm</a>
+								</span><!-- .comment-meta .commentmetadata -->
+		</div><!-- .comment-head .comment-author .vcard -->
+		
+		<div class="comment-body">
+			<p>That’s definitely a good feature to have! Very convenient.  Thanks!</p>
+		</div><!-- .comment-body -->
+
+		 <div class="act tip">
+				 		<a class="comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?replytocom=683#respond" onclick='return addComment.moveForm("comment-683", "683", "respond", "566")'>Reply</a>
+								 </div><!-- .act .tip -->
+
+	</div><!-- #comment-## -->
+</li>
+</ul>
+</li>
+						</ol><!-- #comments -->
+
+			
+			
+		</div><!-- #comment-list -->
+
+	
+									<div class="js" id="respond">
+				<h3 id="reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/#respond" style="display: none;">Cancel reply</a></small></h3>
+									<form action="http://henrypoon.wordpress.com/wp-comments-post.php" method="post" id="commentform">
+																										
+
+
+												
+<input name="hc_post_as" id="hc_post_as" value="guest" type="hidden">
+
+<div class="comment-form-field comment-textarea">
+	<label for="comment">Enter your comment here...</label>
+	<div id="comment-form-comment"><textarea tabindex="-1" style="height: 37px; overflow-y: hidden; position: absolute; top: 0px; left: -9999px; width: 582px; line-height: 16px; text-decoration: none; letter-spacing: normal;"></textarea><textarea style="height: 37px; overflow-y: hidden;" id="comment" name="comment"></textarea></div>
+</div>
+
+<div style="display: none;" id="comment-form-identity">
+
+	<div id="comment-form-nascar">
+		<p>Fill in your details below or click an icon to log in:</p>
+		<ul>
+			<li class="selected" style="display: none;">
+				<a href="#comment-form-guest" id="postas-guest" title="Guest">
+					<span></span>
+				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:WordPress.com" id="postas-wordpress" title="WordPress.com">
+					<span></span>
+				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Twitter" id="postas-twitter" title="Twitter">
+					<span></span>
+				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Facebook" id="postas-facebook" title="Facebook">
+					<span></span>
+				</a>
+			</li>
+		</ul>
+	</div>
+
+	<div id="comment-form-guest" class="comment-form-service selected">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+<a href="https://gravatar.com/site/signup/" target="_blank">				<img scale="1.5" originals="25" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/ad516503a11cd5ca435acc9bb6523536_002.png" alt="Gravatar" class="no-grav" width="25">
+</a>			</div>
+
+				<div class="comment-form-fields">
+				<div class="comment-form-field comment-form-email">
+					<label for="email">Email <span class="required">(required)</span> <span class="nopublish">(Address never made public)</span></label>
+					<div class="comment-form-input"><input id="email" name="email" type="text"></div>
+				</div>
+				<div class="comment-form-field comment-form-author">
+					<label for="author">Name <span class="required">(required)</span></label>
+					<div class="comment-form-input"><input id="author" name="author" type="text"></div>
+				</div>
+				<div class="comment-form-field comment-form-url">
+					<label for="url">Website</label>
+					<div class="comment-form-input"><input id="url" name="url" type="text"></div>
+				</div> 
+			</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-wordpress" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img scale="0" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/wplogo.png" alt="WordPress.com Logo" class="no-grav" width="25">
+			</div>
+
+				<div class="comment-form-fields">
+				<input name="wp_avatar" id="wordpress-avatar" class="comment-meta-wordpress" value="" type="hidden">
+				<input name="wp_user_id" id="wordpress-user_id" class="comment-meta-wordpress" value="" type="hidden">
+				<input name="wp_access_token" id="wordpress-access_token" class="comment-meta-wordpress" value="" type="hidden">
+				<p class="comment-form-posting-as pa-wordpress"><strong></strong> You are commenting using your WordPress.com account. <span class="comment-form-log-out">(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout(%20'wordpress'%20);">Log&nbsp;Out</a>&nbsp;/&nbsp;<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)</span></p>
+			</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-twitter" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img scale="1.5" originals="25" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/ad516503a11cd5ca435acc9bb6523536.png" alt="Twitter picture" class="no-grav" width="25">
+			</div>
+
+				<div class="comment-form-fields">
+				<input name="twitter_avatar" id="twitter-avatar" class="comment-meta-twitter" value="" type="hidden">
+				<input name="twitter_user_id" id="twitter-user_id" class="comment-meta-twitter" value="" type="hidden">
+				<input name="twitter_access_token" id="twitter-access_token" class="comment-meta-twitter" value="" type="hidden">
+				<p class="comment-form-posting-as pa-twitter"><strong></strong> You are commenting using your Twitter account. <span class="comment-form-log-out">(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout(%20'twitter'%20);">Log&nbsp;Out</a>&nbsp;/&nbsp;<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)</span></p>
+			</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-facebook" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img scale="1.5" originals="25" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/ad516503a11cd5ca435acc9bb6523536.png" alt="Facebook photo" class="no-grav" width="25">
+			</div>
+
+				<div class="comment-form-fields">
+				<input name="fb_avatar" id="facebook-avatar" class="comment-meta-facebook" value="" type="hidden">
+				<input name="fb_user_id" id="facebook-user_id" class="comment-meta-facebook" value="" type="hidden">
+				<input name="fb_access_token" id="facebook-access_token" class="comment-meta-facebook" value="" type="hidden">
+				<p class="comment-form-posting-as pa-facebook"><strong></strong> You are commenting using your Facebook account. <span class="comment-form-log-out">(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout(%20'facebook'%20);">Log&nbsp;Out</a>&nbsp;/&nbsp;<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)</span></p>
+			</div>
+	
+		</div>
+	</div>
+
+
+	<div id="comment-form-load-service" class="comment-form-service">
+		<div class="comment-form-posting-as-cancel"><a href="javascript:HighlanderComments.cancelExternalWindow();">Cancel</a></div>
+		<p>Connecting to %s</p>
+	</div>
+	
+	
+</div>
+
+<script type="text/javascript">
+jQuery(document).ready(function(){
+	var input = document.createElement( 'input' ),
+	    comment = jQuery( '#comment' );
+
+	if ( 'placeholder' in input ) {
+		comment.attr( 'placeholder', jQuery( '.comment-textarea label' ).remove().text() );
+	}
+
+	// Expando Mode: start small, then auto-resize on first click + text length
+	jQuery( '#comment-form-identity' ).hide();
+	jQuery( '#comment-form-subscribe' ).hide();
+	jQuery( '#commentform .form-submit' ).hide();
+
+	comment.css( { 'height':'10px' } ).one( 'focus', function() {
+		var timer = setInterval( HighlanderComments.resizeCallback, 10 )
+		jQuery( this ).animate( { 'height': HighlanderComments.initialHeight } ).delay( 100 ).queue( function(n) { clearInterval( timer ); HighlanderComments.resizeCallback(); n(); } );
+		jQuery( '#comment-form-identity' ).slideDown();
+		jQuery( '#comment-form-subscribe' ).slideDown();
+		jQuery( '#commentform .form-submit' ).slideDown();
+	});
+});
+</script>
+
+<div style="display: none;" id="comment-form-subscribe"> 
+	<p class="comment-subscription-form"><input name="subscribe" id="subscribe" value="subscribe" style="width: auto;" tabindex="6" type="checkbox"> <label class="subscribe-label" id="subscribe-label" for="subscribe">Notify me of follow-up comments via email.</label></p><p class="post-subscription-form"><input name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto;" tabindex="7" type="checkbox"> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog">Notify me of new posts via email.</label></p></div>
+
+												<p style="display: none;" class="form-submit">
+							<input name="submit" id="comment-submit" value="Post Comment" type="submit">
+							<input name="comment_post_ID" value="566" id="comment_post_ID" type="hidden">
+<input name="comment_parent" id="comment_parent" value="0" type="hidden">
+						</p>
+						
+<input name="genseq" value="1345030617" type="hidden">
+<p style="display: none;"><input id="akismet_comment_nonce" name="akismet_comment_nonce" value="e45fac0660" type="hidden"></p><script type="text/javascript" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/form.js"></script>
+<p style="display: none;"><input id="ak_js" name="ak_js" value="1345030898669" type="hidden"></p>					</form>
+							</div><!-- #respond -->
+			<div style="clear: both;"></div>			
+</div><!-- #post-extra-content -->
+									</div><!-- #content -->
+			</div><!-- #content-container -->
+
+
+	<div id="sidebar" class="widget-area" role="complementary">
+				<ul class="xoxo">
+
+		<li id="search-3" class="widget widget_search"><h3 class="widget-title"><span>Search</span></h3>
+<form method="get" id="searchform" action="http://henrypoon.wordpress.com/">
+	<div id="searchfield">
+		<label for="s" class="screen-reader-text">Search for:</label>
+		<input name="s" id="s" class="searchtext" type="text">
+		<input value="Go" class="searchbutton" type="submit">
+	</div>
+</form></li><li id="linkcat-1356" class="widget widget_links"><h3 class="widget-title"><span>Blogroll</span></h3>
+	<ul class="xoxo blogroll">
+<li><a href="https://picasaweb.google.com/117972094293741244551" rel="me" target="_blank">My Picasa Photo Albums</a></li>
+<li><a href="http://cyberfish.wecheer.com/blog/" rel="friend met colleague" title="“Have you moo-ed today?”" target="_blank">Piece of Mind</a></li>
+
+	</ul>
+</li>
+<li id="tag_cloud" class="widget widget_tag_cloud"><h3 class="widget-title"><span>Category Cloud</span></h3><div style="overflow: hidden;"><a href="http://henrypoon.wordpress.com/category/android/" style="font-size: 75%; padding: 1px; margin: 1px;" title="android (1)">android</a> <a href="http://henrypoon.wordpress.com/category/bad-habits/" style="font-size: 75%; padding: 1px; margin: 1px;" title="bad habits (1)">bad habits</a> <a href="http://henrypoon.wordpress.com/category/books/" style="font-size: 83.5784%; padding: 1px; margin: 1px;" title="books (8)">books</a> <a href="http://henrypoon.wordpress.com/category/computer-and-video-games/" style="font-size: 86.0294%; padding: 1px; margin: 1px;" title="computer and video games (10)">computer and video games</a> <a href="http://henrypoon.wordpress.com/category/computer-stuff/" style="font-size: 200%; padding: 1px; margin: 1px;" title="computer stuff (103)">computer stuff</a> <a href="http://henrypoon.wordpress.com/category/dota/" style="font-size: 81.1274%; padding: 1px; margin: 1px;" title="dota (6)">dota</a> <a href="http://henrypoon.wordpress.com/category/engineering/" style="font-size: 77.451%; padding: 1px; margin: 1px;" title="engineering (3)">engineering</a> <a href="http://henrypoon.wordpress.com/category/europe/" style="font-size: 154.657%; padding: 1px; margin: 1px;" title="europe (66)">europe</a> <a href="http://henrypoon.wordpress.com/category/food/" style="font-size: 103.186%; padding: 1px; margin: 1px;" title="food (24)">food</a> <a href="http://henrypoon.wordpress.com/category/ipod/" style="font-size: 78.6765%; padding: 1px; margin: 1px;" title="ipod (4)">ipod</a> <a href="http://henrypoon.wordpress.com/category/linux/" style="font-size: 77.451%; padding: 1px; margin: 1px;" title="linux (3)">linux</a> <a href="http://henrypoon.wordpress.com/category/movies/" style="font-size: 76.2255%; padding: 1px; margin: 1px;" title="movies (2)">movies</a> <a href="http://henrypoon.wordpress.com/category/music/" style="font-size: 75%; padding: 1px; margin: 1px;" title="music (1)">music</a> <a href="http://henrypoon.wordpress.com/category/north-america/" style="font-size: 92.1569%; padding: 1px; margin: 1px;" title="north america (15)">north america</a> <a href="http://henrypoon.wordpress.com/category/nostalgia/" style="font-size: 76.2255%; padding: 1px; margin: 1px;" title="nostalgia (2)">nostalgia</a> <a href="http://henrypoon.wordpress.com/category/opinions/" style="font-size: 83.5784%; padding: 1px; margin: 1px;" title="opinions (8)">opinions</a> <a href="http://henrypoon.wordpress.com/category/p1i/" style="font-size: 83.5784%; padding: 1px; margin: 1px;" title="P1i (8)">P1i</a> <a href="http://henrypoon.wordpress.com/category/phones/" style="font-size: 77.451%; padding: 1px; margin: 1px;" title="phones (3)">phones</a> <a href="http://henrypoon.wordpress.com/category/random/" style="font-size: 78.6765%; padding: 1px; margin: 1px;" title="random (4)">random</a> <a href="http://henrypoon.wordpress.com/category/sfu/" style="font-size: 75%; padding: 1px; margin: 1px;" title="sfu (1)">sfu</a> <a href="http://henrypoon.wordpress.com/category/sick/" style="font-size: 75%; padding: 1px; margin: 1px;" title="sick (1)">sick</a> <a href="http://henrypoon.wordpress.com/category/sleepy/" style="font-size: 88.4804%; padding: 1px; margin: 1px;" title="sleepy (12)">sleepy</a> <a href="http://henrypoon.wordpress.com/category/solidworks/" style="font-size: 78.6765%; padding: 1px; margin: 1px;" title="solidworks (4)">solidworks</a> <a href="http://henrypoon.wordpress.com/category/tetris/" style="font-size: 75%; padding: 1px; margin: 1px;" title="tetris (1)">tetris</a> <a href="http://henrypoon.wordpress.com/category/tvb/" style="font-size: 77.451%; padding: 1px; margin: 1px;" title="tvb (3)">tvb</a> <a href="http://henrypoon.wordpress.com/category/ubcec/" style="font-size: 76.2255%; padding: 1px; margin: 1px;" title="ubcec (2)">ubcec</a> <a href="http://henrypoon.wordpress.com/category/udk/" style="font-size: 87.2549%; padding: 1px; margin: 1px;" title="UDK (11)">UDK</a> <a href="http://henrypoon.wordpress.com/category/usb-bear/" style="font-size: 75%; padding: 1px; margin: 1px;" title="usb bear (1)">usb bear</a> <a href="http://henrypoon.wordpress.com/category/weird/" style="font-size: 77.451%; padding: 1px; margin: 1px;" title="weird (3)">weird</a> <a href="http://henrypoon.wordpress.com/category/work/" style="font-size: 83.5784%; padding: 1px; margin: 1px;" title="work (8)">work</a> </div></li><li id="top-posts-2" class="widget widget_top-posts"><h3 class="widget-title"><span>Top Posts</span></h3><ul><li><a href="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/" class="bump-view" data-bump-view="tp">Serial Communication in Java with Example Program</a></li>
+<li><a href="http://henrypoon.wordpress.com/2011/03/04/spell-check-on-notepad/" class="bump-view" data-bump-view="tp">Spell Check on Notepad++</a></li>
+<li><a href="http://henrypoon.wordpress.com/2011/01/28/utorrent-feature-prioritize-by-file-order/" class="bump-view" data-bump-view="tp">uTorrent Feature: Prioritize by File Order</a></li>
+<li><a href="http://henrypoon.wordpress.com/2010/12/25/installing-rxtx-for-serial-communication-with-java/" class="bump-view" data-bump-view="tp">Installing RXTX for Serial Communication with Java</a></li>
+<li><a href="http://henrypoon.wordpress.com/2010/10/26/getting-rid-of-that-awful-content-preparation-progress-in-adobe-reader/" class="bump-view" data-bump-view="tp">Getting Rid of that Awful “Content Preparation Progress” in Adobe Reader</a></li>
+<li><a href="http://henrypoon.wordpress.com/2009/11/18/how-to-install-solidworks-2008-on-a-x64-operating-system/" class="bump-view" data-bump-view="tp">How to Install Solidworks 2008 on a x64 Operating System</a></li>
+<li><a href="http://henrypoon.wordpress.com/2012/01/02/setting-up-karaoke-ktv-like-an-actual-karaoke-place-at-home-using-jetktv/" class="bump-view" data-bump-view="tp">Setting up Karaoke (KTV) like an actual Karaoke place at home using JetKTV</a></li>
+<li><a href="http://henrypoon.wordpress.com/2011/12/27/repairing-a-laptop-display-that-is-dim-or-has-a-black-corner/" class="bump-view" data-bump-view="tp">Repairing a laptop display that is dim or has a black corner</a></li>
+<li><a href="http://henrypoon.wordpress.com/2011/01/13/ip-blocking-on-utorrent-using-bluetacks-blocklist-manager/" class="bump-view" data-bump-view="tp">IP Blocking on uTorrent using Bluetack’s Blocklist Manager</a></li>
+<li><a href="http://henrypoon.wordpress.com/2010/10/11/java-serial-programming/" class="bump-view" data-bump-view="tp">Java Serial Programming</a></li>
+</ul></li>		<li id="blog-stats" class="widget widget_statscounter">			<h3 class="widget-title"><span>Blog Stats</span></h3>			<ul>
+			<li>93,320 hits</li>
+			</ul>
+		</li><li id="blog_subscription-2" class="widget widget_blog_subscription"><h3 class="widget-title"><span><label for="subscribe-field">Follow Blog via Email</label></span></h3>
+			<form action="https://subscribe.wordpress.com" method="post" accept-charset="utf-8" id="subscribe-blog">
+									<p>Enter your email address to follow this blog and receive notifications of new posts by email.</p>
+<p>Join 10 other followers</p>
+					<p><input name="email" style="width: 95%; padding: 1px 2px;" id="subscribe-field" type="text"></p>
+				
+				<p>
+					<input name="action" value="subscribe" type="hidden">
+					<input name="blog_id" value="10792748" type="hidden">
+					<input name="source" value="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/" type="hidden">
+					<input name="sub-type" value="widget" type="hidden">
+					<input name="redirect_fragment" value="blog_subscription-2" type="hidden">
+					<input id="_wpnonce" name="_wpnonce" value="a26f314093" type="hidden">					<input value="Follow" type="submit">
+				</p>
+			</form>
+			
+</li><li id="calendar-3" class="widget widget_calendar"><h3 class="widget-title"><span>Calendar</span></h3><div id="calendar_wrap"><table id="wp-calendar">
+	<caption>January 2011</caption>
+	<thead>
+	<tr>
+		<th scope="col" title="Sunday">S</th>
+		<th scope="col" title="Monday">M</th>
+		<th scope="col" title="Tuesday">T</th>
+		<th scope="col" title="Wednesday">W</th>
+		<th scope="col" title="Thursday">T</th>
+		<th scope="col" title="Friday">F</th>
+		<th scope="col" title="Saturday">S</th>
+	</tr>
+	</thead>
+
+	<tfoot>
+	<tr>
+		<td colspan="3" id="prev"><a href="http://henrypoon.wordpress.com/2010/12/" title="View posts for December 2010">« Dec</a></td>
+		<td class="pad">&nbsp;</td>
+		<td colspan="3" id="next"><a href="http://henrypoon.wordpress.com/2011/02/" title="View posts for February 2011">Feb »</a></td>
+	</tr>
+	</tfoot>
+
+	<tbody>
+	<tr>
+		<td colspan="6" class="pad">&nbsp;</td><td><a href="http://henrypoon.wordpress.com/2011/01/01/" title="Serial Communication in Java with Example&nbsp;Program">1</a></td>
+	</tr>
+	<tr>
+		<td><a href="http://henrypoon.wordpress.com/2011/01/02/" title="2010 in&nbsp;Review
+VMWare USB Controller Does Not&nbsp;Load">2</a></td><td>3</td><td>4</td><td>5</td><td><a href="http://henrypoon.wordpress.com/2011/01/06/" title="Common&nbsp;Misconceptions
+Computer Repair &amp; Maintenance&nbsp;Costs
+Cool On-Hold&nbsp;Music">6</a></td><td>7</td><td>8</td>
+	</tr>
+	<tr>
+		<td>9</td><td>10</td><td><a href="http://henrypoon.wordpress.com/2011/01/11/" title="Leaving&nbsp;Vancouver">11</a></td><td>12</td><td><a href="http://henrypoon.wordpress.com/2011/01/13/" title="IP Blocking on uTorrent using Bluetack’s Blocklist&nbsp;Manager">13</a></td><td>14</td><td><a href="http://henrypoon.wordpress.com/2011/01/15/" title="Settling in&nbsp;Germany
+Sightseeing around Gerlingen, Ludwigsburg, and Stuttgart Part&nbsp;I
+Sightseeing around Gerlingen, Ludwigsburg, and Stuttgart Part&nbsp;II">15</a></td>
+	</tr>
+	<tr>
+		<td><a href="http://henrypoon.wordpress.com/2011/01/16/" title="Sightseeing around Gerlingen, Ludwigsburg, and Stuttgart Part&nbsp;III
+Solitude Schloss (Castle&nbsp;Solitude)">16</a></td><td><a href="http://henrypoon.wordpress.com/2011/01/17/" title="First Day at&nbsp;Bosch
+Comparison between Prepaid Phone Plans from Fido and&nbsp;Vodafone">17</a></td><td><a href="http://henrypoon.wordpress.com/2011/01/18/" title="A Purpose Driven Life by Rick&nbsp;Warren
+It All Starts with God – Day&nbsp;1">18</a></td><td><a href="http://henrypoon.wordpress.com/2011/01/19/" title="You Are Not an Accident – Day&nbsp;2">19</a></td><td><a href="http://henrypoon.wordpress.com/2011/01/20/" title="Winter in&nbsp;Germany
+The Cramped&nbsp;Airplane
+What Drives My Life? – Day&nbsp;3
+Switching Microsoft Windows and Office to&nbsp;English
+Going to Work in the&nbsp;Snow">20</a></td><td><a href="http://henrypoon.wordpress.com/2011/01/21/" title="Made to Last Forever – Day&nbsp;4">21</a></td><td><a href="http://henrypoon.wordpress.com/2011/01/22/" title="Seeing Life from God’s View – Day&nbsp;5
+Life is a Temporary Assignment – Day&nbsp;6
+The Mercedes-Benz&nbsp;Museum">22</a></td>
+	</tr>
+	<tr>
+		<td><a href="http://henrypoon.wordpress.com/2011/01/23/" title="Observations about Germany and their&nbsp;Culture">23</a></td><td>24</td><td><a href="http://henrypoon.wordpress.com/2011/01/25/" title="Faith
+German&nbsp;Keyboards">25</a></td><td>26</td><td>27</td><td><a href="http://henrypoon.wordpress.com/2011/01/28/" title="uTorrent Feature: Prioritize by File&nbsp;Order">28</a></td><td><a href="http://henrypoon.wordpress.com/2011/01/29/" title="Numerical Methods for Non-Linear&nbsp;Optimization
+An Awesome&nbsp;Day">29</a></td>
+	</tr>
+	<tr>
+		<td><a href="http://henrypoon.wordpress.com/2011/01/30/" title="Optimizing Sleeping&nbsp;Time">30</a></td><td>31</td>
+		<td class="pad" colspan="5">&nbsp;</td>
+	</tr>
+	</tbody>
+	</table></div></li><li id="archives-2" class="widget widget_archive"><h3 class="widget-title"><span>Archives</span></h3>		<ul>
+			<li><a href="http://henrypoon.wordpress.com/2012/08/" title="August 2012">August 2012</a>&nbsp;(7)</li>
+	<li><a href="http://henrypoon.wordpress.com/2012/07/" title="July 2012">July 2012</a>&nbsp;(7)</li>
+	<li><a href="http://henrypoon.wordpress.com/2012/06/" title="June 2012">June 2012</a>&nbsp;(2)</li>
+	<li><a href="http://henrypoon.wordpress.com/2012/05/" title="May 2012">May 2012</a>&nbsp;(1)</li>
+	<li><a href="http://henrypoon.wordpress.com/2012/04/" title="April 2012">April 2012</a>&nbsp;(1)</li>
+	<li><a href="http://henrypoon.wordpress.com/2012/03/" title="March 2012">March 2012</a>&nbsp;(1)</li>
+	<li><a href="http://henrypoon.wordpress.com/2012/02/" title="February 2012">February 2012</a>&nbsp;(1)</li>
+	<li><a href="http://henrypoon.wordpress.com/2012/01/" title="January 2012">January 2012</a>&nbsp;(3)</li>
+	<li><a href="http://henrypoon.wordpress.com/2011/12/" title="December 2011">December 2011</a>&nbsp;(3)</li>
+	<li><a href="http://henrypoon.wordpress.com/2011/11/" title="November 2011">November 2011</a>&nbsp;(2)</li>
+	<li><a href="http://henrypoon.wordpress.com/2011/10/" title="October 2011">October 2011</a>&nbsp;(1)</li>
+	<li><a href="http://henrypoon.wordpress.com/2011/09/" title="September 2011">September 2011</a>&nbsp;(3)</li>
+	<li><a href="http://henrypoon.wordpress.com/2011/08/" title="August 2011">August 2011</a>&nbsp;(11)</li>
+	<li><a href="http://henrypoon.wordpress.com/2011/07/" title="July 2011">July 2011</a>&nbsp;(8)</li>
+	<li><a href="http://henrypoon.wordpress.com/2011/06/" title="June 2011">June 2011</a>&nbsp;(10)</li>
+	<li><a href="http://henrypoon.wordpress.com/2011/05/" title="May 2011">May 2011</a>&nbsp;(6)</li>
+	<li><a href="http://henrypoon.wordpress.com/2011/04/" title="April 2011">April 2011</a>&nbsp;(5)</li>
+	<li><a href="http://henrypoon.wordpress.com/2011/03/" title="March 2011">March 2011</a>&nbsp;(17)</li>
+	<li><a href="http://henrypoon.wordpress.com/2011/02/" title="February 2011">February 2011</a>&nbsp;(7)</li>
+	<li><a href="http://henrypoon.wordpress.com/2011/01/" title="January 2011">January 2011</a>&nbsp;(34)</li>
+	<li><a href="http://henrypoon.wordpress.com/2010/12/" title="December 2010">December 2010</a>&nbsp;(12)</li>
+	<li><a href="http://henrypoon.wordpress.com/2010/11/" title="November 2010">November 2010</a>&nbsp;(3)</li>
+	<li><a href="http://henrypoon.wordpress.com/2010/10/" title="October 2010">October 2010</a>&nbsp;(5)</li>
+	<li><a href="http://henrypoon.wordpress.com/2010/09/" title="September 2010">September 2010</a>&nbsp;(2)</li>
+	<li><a href="http://henrypoon.wordpress.com/2010/08/" title="August 2010">August 2010</a>&nbsp;(4)</li>
+	<li><a href="http://henrypoon.wordpress.com/2010/07/" title="July 2010">July 2010</a>&nbsp;(2)</li>
+	<li><a href="http://henrypoon.wordpress.com/2010/06/" title="June 2010">June 2010</a>&nbsp;(8)</li>
+	<li><a href="http://henrypoon.wordpress.com/2010/05/" title="May 2010">May 2010</a>&nbsp;(23)</li>
+	<li><a href="http://henrypoon.wordpress.com/2010/02/" title="February 2010">February 2010</a>&nbsp;(14)</li>
+	<li><a href="http://henrypoon.wordpress.com/2010/01/" title="January 2010">January 2010</a>&nbsp;(16)</li>
+	<li><a href="http://henrypoon.wordpress.com/2009/12/" title="December 2009">December 2009</a>&nbsp;(15)</li>
+	<li><a href="http://henrypoon.wordpress.com/2009/11/" title="November 2009">November 2009</a>&nbsp;(19)</li>
+		</ul>
+</li>
+		</ul>
+	</div><!-- #sidebar .widget-area -->
+
+	
+</div><!-- #main -->
+
+		<div id="footer" role="contentinfo">
+			
+				<div id="copyright">
+					<p>
+	 					<a href="http://wordpress.com/?ref=footer" rel="generator">Blog at WordPress.com</a>.
+						Theme: <a href="http://theme.wordpress.com/themes/mystique/" title="Learn more about this theme">Mystique</a> by <a href="http://digitalnature.eu/" rel="designer">digitalnature</a>.					</p>
+				</div><!-- #copyright -->
+			</div><!-- #footer -->
+	</div><!-- #container -->
+</div><!-- #page -->
+
+
+<script type="text/javascript">
+var _qevents = _qevents || [], wpcomQuantcastData = {"qacct":"p-18-mFEk4J448M","labels":",language.en,type.wpcom"};
+function wpcomQuantcastPixel( labels, options ) {
+	var i, defaults = wpcomQuantcastData, data = { event: 'ajax' };
+
+	labels  = labels  || '';
+	options = options || {};
+
+	if ( typeof labels != 'string' )
+		options = labels;
+
+	for ( i in defaults ) {
+		data[i] = defaults[i];
+	}
+
+	for ( i in options ) {
+		data[i] = options[i];
+	}
+
+	if ( data.labels ) {
+		data.labels += ',' + labels;
+	} else {
+		data.labels = labels;
+	}
+
+	_qevents.push( data );
+};
+(function() {var elem = document.createElement('script');elem.src = (document.location.protocol == "https:" ? "https://secure" : "http://edge") + ".quantserve.com/quant.js";elem.async = true;elem.type = "text/javascript";var scpt = document.getElementsByTagName('script')[0];scpt.parentNode.insertBefore(elem, scpt);  })();
+_qevents.push( wpcomQuantcastData );
+</script>
+<noscript><div style="display: none;"><img src="//pixel.quantserve.com/pixel/p-18-mFEk4J448M.gif?labels=%2Clanguage.en%2Ctype.wpcom" height="1" width="1" alt="" /></div></noscript>
+
+
+	<script type="text/javascript">
+	/* <![CDATA[ */
+	(function($){
+		$(document).on( 'ready post-load', function() {
+
+			// Remove the login box when clicking the page
+			$( document ).mousedown( function( e ) {
+				if ( null == $( e.target ).closest( '#wpl-mustlogin' ).get( 0 ) ) {
+					$( '#wpl-mustlogin' ).remove();
+				}
+			});
+
+			// Handle clicking the like button itself
+			$('.wpl-button > a.like').click( function(e) {
+				e.preventDefault();
+
+				var postid = $(this).parent().attr('id').split('like-')[1];
+				$.post( 'http://henrypoon.wordpress.com/wp-admin/admin-ajax.php', {
+					'action': 'wpl_record_stat',
+					'stat_name': 'loggedout_like_click'
+				} );
+
+				var tenMins = new Date();
+				tenMins.setTime( tenMins.getTime() + 600000 );
+				document.cookie = 'wpl_rand=d3681998c5; expires=' + tenMins.toGMTString() + '; domain=wordpress.com; path=/;';
+
+				$(this).parent().siblings('.wpl-count').after( '\
+					<div id="wpl-mustlogin"> \
+						<form action="https://henrypoon.wordpress.com/wp-login.php" method="post"> \
+							<p>Just one more step to like this:</p> \
+							<label><span>Username</span> <input type="text" name="log" id="user_login" class="input" value="" size="20" tabindex="80" /></label> \
+							<label><span>Password</span> <input type="password" name="pwd" id="user_pass" class="input" value="" size="20" tabindex="81" /></label> \
+							<input type="submit" name="wp-submit" id="wp-submit" class="button-primary" value="Log In" tabindex="82" /> \
+							<input type="hidden" name="postid" value="' + postid + '" /> \
+							<input type="hidden" name="redirect_to" value="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program?year=2011&#038;monthnum=01&#038;day=01&#038;name=serial-communication-in-java-with-example-program&#038;like=1" /> \
+							<input type="hidden" name="wpl_rand" value="d3681998c5" /> \
+							<p>Not a member yet? <a href="http://wordpress.com/signup/?ref=likebox" id="wpl-signup-link">Sign up with WordPress.com</a></p> \
+						</form> \
+					</div> \
+				');
+
+				$('#wpl-mustlogin').hide().slideDown('fast');
+			} );
+
+			$('#wpl-mustlogin input.input').live( 'focus', function() {
+				$(this).prev().hide();
+			}).live( 'blur', function() {
+				if ( $(this).val() == '' ) {
+					$(this).prev().show();
+				}
+			});
+
+			$('#wpl-mustlogin input#wp-submit').live( 'click', function(e) {
+				e.preventDefault();
+
+				$.post( 'http://henrypoon.wordpress.com/wp-admin/admin-ajax.php', {
+					'action': 'wpl_record_stat',
+					'stat_name': 'loggedout_login_submit'
+				}, function() {
+					$('#wpl-mustlogin form').submit();
+				} );
+			});
+
+			$('#wpl-mustlogin a#wpl-signup-link').live( 'click', function(e) {
+				e.preventDefault();
+
+				var link = $(this).attr('href');
+
+				$.post( 'http://henrypoon.wordpress.com/wp-admin/admin-ajax.php', {
+					'action': 'wpl_record_stat',
+					'stat_name': 'loggedout_signup_click'
+				}, function() {
+					location.href = link;
+				} );
+			});
+		})
+	})(jQuery);
+	/* ]]> */
+	</script>
+
+	<script type="text/javascript">
+		WPCOM_sharing_counts = {'http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/':'566'};
+	</script>
+	
+<script type="text/javascript" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/gprofiles.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var WPGroHo = {"my_hash":""};
+/* ]]> */
+</script>
+<script type="text/javascript" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/wpgroho.js"></script>
+<script>jQuery(document).ready(function($){ Gravatar.profile_cb = function( h, d ) { WPGroHo.syncProfileData( h, d );	}; Gravatar.my_hash = WPGroHo.my_hash; Gravatar.init( 'body', '#wp-admin-bar-my-account' ); });</script>	<div style="display: none;">
+	<div class="grofile-hash-map-0344900f63bf7eab0ba43e4a95a27543">
+	</div>
+	<div class="grofile-hash-map-c80187c10f5cfbe9905001a1b8df16c7">
+	</div>
+	<div class="grofile-hash-map-05b5e1c864cfc4c7bb21f9e405392bef">
+	</div>
+	<div class="grofile-hash-map-4c474503c0dc5f2e4aa43864ca20508e">
+	</div>
+	<div class="grofile-hash-map-6dd0f841f719dd13b8a70223f3b04b22">
+	</div>
+	<div class="grofile-hash-map-fe3aea290fb7abbc08bc8463965cea48">
+	</div>
+	<div class="grofile-hash-map-86743a9e58a3c57267125cf1b3717d51">
+	</div>
+	<div class="grofile-hash-map-ad91d733de5dbcc30d2fd509d33b98e5">
+	</div>
+	<div class="grofile-hash-map-3164b52693842014b526af68113319f8">
+	</div>
+	<div class="grofile-hash-map-edda1632d0da1ff55745caafa2d1904f">
+	</div>
+	<div class="grofile-hash-map-c41faa1d36628fbf54eb445207f7f80c">
+	</div>
+	<div class="grofile-hash-map-0008b4137fc0e170a836dc2ee95b1f0d">
+	</div>
+	<div class="grofile-hash-map-66608c14c802096f309de60acfdf7386">
+	</div>
+	<div class="grofile-hash-map-4541528453e79a388c4ed9177d2f3030">
+	</div>
+	<div class="grofile-hash-map-08abe113405de696dd2d7fa76d0edd9c">
+	</div>
+	<div class="grofile-hash-map-81c7b5df6d782a48fd63fe0ce871be2c">
+	</div>
+	<div class="grofile-hash-map-aeaa68d511889eac6185660b915eb1cf">
+	</div>
+	<div class="grofile-hash-map-b32800b181d19faacf02c6c0bcf3f664">
+	</div>
+	<div class="grofile-hash-map-2037a9a1fe6fa697443d9a41fc4d85f5">
+	</div>
+	<div class="grofile-hash-map-3a340353cf3378e611e9055a5a77fbbc">
+	</div>
+	<div class="grofile-hash-map-877270dff878b5258a3b644b5035dd1d">
+	</div>
+	</div>
+<script type="text/javascript">
+/* <![CDATA[ */
+var HighlanderComments = {"loggingInText":"Logging In\u2026","submittingText":"Posting Comment\u2026","postCommentText":"Post Comment","connectingToText":"Connecting to %s","commentingAsText":"%1$s: You are commenting using your %2$s account.","logoutText":"Log Out","loginText":"Log In","connectURL":"http:\/\/henrypoon.wordpress.com\/public.api\/connect\/?action=request","logoutURL":"http:\/\/henrypoon.wordpress.com\/wp-login.php?action=logout&_wpnonce=a8db6a6bb4","homeURL":"http:\/\/henrypoon.wordpress.com\/","postID":"566","gravDefault":"retro","enterACommentError":"Please enter a comment","enterEmailError":"Please enter your email address here","invalidEmailError":"Invalid email address","enterAuthorError":"Please enter your name here","gravatarFromEmail":"This picture will show whenever you leave a comment. Click to customize it.","logInToExternalAccount":"Log in to use details from one of these accounts.","change":"Change","changeAccount":"Change Account","comment_registration":"","userIsLoggedIn":"","isJetpack":"0"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/script.js"></script>
+	
+	<div style="bottom: -248px;" id="bit" class="loggedout-follow-normal">
+		<a class="bsub" href="javascript:void(0)"><span id="bsub-text">Follow</span></a>
+		<div id="bitsubscribe">
+			
+					<h3><label for="loggedout-follow-field">Follow “Henry Poon's Blog”</label></h3>
+		
+			<form action="https://subscribe.wordpress.com" method="post" accept-charset="utf-8" id="loggedout-follow">
+			<p>Get every new post delivered to your Inbox.</p>
+			
+			<p id="loggedout-follow-error" style="display: none;"></p>
+
+					
+			
+			<p><input name="email" style="width: 95%; padding: 1px 2px;" value="Enter your email address" onfocus='this.value=(this.value=="Enter your email address") ? "" : this.value;' onblur='this.value=(this.value=="") ? "Enter email address" : this.value;' id="loggedout-follow-field" type="email"></p>
+
+			<input name="action" value="subscribe" type="hidden">
+			<input name="blog_id" value="10792748" type="hidden">
+			<input name="source" value="http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/" type="hidden">
+			<input name="sub-type" value="loggedout-follow" type="hidden">
+
+			<input id="_wpnonce" name="_wpnonce" value="a26f314093" type="hidden"><input name="_wp_http_referer" value="/2011/01/01/serial-communication-in-java-with-example-program/" type="hidden">
+			<p id="bsub-subscribe-button"><input value="Sign me up" type="submit"></p>
+			</form>
+					<div id="bsub-credit"><a href="http://wordpress.com/signup/?ref=lof">Powered by WordPress.com</a></div>
+		</div><!-- #bitsubscribe -->
+	</div><!-- #bit -->
+<script type="text/javascript" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/sharing.js"></script>
+		<script type="text/javascript" charset="utf-8">
+		jQuery(document).ready(function(){
+			jQuery( '.share-facebook' ).click(function(){
+				window.open( jQuery(this).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+		});
+		</script>
+			<script type="text/javascript" charset="utf-8">
+	function sharing_plusone( obj ) { 
+		jQuery.ajax( {
+			url: 'http://henrypoon.wordpress.com/2011/01/01/serial-communication-in-java-with-example-program/?share=google-plus-1',
+			type: 'POST',
+			data: obj
+		} );
+	}
+	</script>
+	<script gapi_processed="true" type="text/javascript" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/plusone.js"></script>
+		<script type="text/javascript" charset="utf-8">
+		jQuery(document).ready(function(){
+			jQuery( '.share-linkedin' ).click(function(){
+				window.open( jQuery(this).attr( 'href' ), 'wpcomlinkedin', 'menubar=1,resizable=1,width=580,height=450' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript" charset="utf-8">
+		jQuery(document).ready(function(){
+			jQuery( '.share-twitter' ).click(function(){
+				window.open( jQuery(this).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+		});
+		</script>
+		<script type="text/javascript" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/beacon.js"></script><script type="text/javascript">try{COMSCORE.beacon({c1:2,c2:7518284});}catch(e){}</script><noscript><p class="robots-nocontent"><img src="http://b.scorecardresearch.com/p?cj=1c1=2&#038;c2=7518284" alt="" style="display:none" width="1" height="1" /></p></noscript><script type="text/javascript" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/devicepx.js"></script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script><script src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/w.js" type="text/javascript"></script>
+<script type="text/javascript">
+st_go({'blog':'10792748','v':'wpcom','user_id':'0','post':'566','subd':'henrypoon'});
+ex_go({'crypt':'UE40eW5QN0p8M2Y/RE1wamRFTUJvcCVmdVtvcCUrditEcC45YX5oRzhfJmY2U0FXeHxpVDVqdXZubkFYcG9KQks9aEtMTGlDa0RtdklJZE43V0JDZDlIZjZuW2tzMktIYmZLL1ZyVmRMRGFddENDYSszMzUsWktxVUFGMlFHc0NobmUmSThpVWs5QyVbJVdhcjlGNVthUS1QaD9+WG8mOTZfS250MlVpcUxBR3FfUlluZ0N4TEw3flJjLGt3X1RCfCwrJXF5aVVFLEg/ZlBJckF+ZGcsMDhMNiZIWT9qRXxQTzd3JWM0TmI4MXh0SHlGU00tJjhTJmt0bFF2ZExjfEQ4cDBCflFmJWhLfDVMcnQ/TS13QncuK3pbUyZ1WXA0RE9NUjR+ZGFdUyt2LlZZbA=='});
+addLoadEvent(function(){linktracker_init('10792748',566);});
+	</script><img scale="0" id="wpstats" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/g.gif" alt=""><img scale="0" id="wpstats2" src="Serial%20Communication%20in%20Java%20with%20Example%20Program%20%C2%AB%20Henry%20Poon%27s%20Blog_arquivos/g_002.gif" alt="" style="display: none;">
+<noscript><img src="http://stats.wordpress.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden" alt="" /></noscript>
+
+</body></html>

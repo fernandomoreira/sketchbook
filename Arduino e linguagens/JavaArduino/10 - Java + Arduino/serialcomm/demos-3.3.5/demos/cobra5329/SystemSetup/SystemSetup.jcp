@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcontrol version="1.0">
+  <project name="SystemSetup">
+    <profile name="JControl/Cobra5329/EBV" revision="4.8.0" build="20080108"/>
+    <info>
+      <company>
+        <name><![CDATA[Domologic GmbH]]></name>
+      </company>
+    </info>
+    <description>
+      <locale language="en"><![CDATA[SystemSetup]]></locale>
+    </description>
+    <libraries/>
+    <files>
+      <layer domain="java">
+        <dir name="src/"/>
+        <dir name="rsc/"/>
+      </layer>
+    </files>
+  </project>
+</jcontrol>

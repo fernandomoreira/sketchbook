@@ -1,0 +1,4 @@
+Wed Mar  1 12:01:05 MST 2006
+rxtxSerial.dll had to be recomopiled to link in missing native methods.
+
+Copiar estas dlls para as pastas bin do JDK e JRE e para a pasta System 32 do windows.

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcontrol version="1.0">
+  <project name="LightAndTemperatureDemo">
+    <profile name="JControl/M523XBCC/Freescale" revision="4.1.0" build="20070830"/>
+    <workspace>
+      <file name="LightAndTemperatureDemo.jcw"/>
+    </workspace>
+    <libraries/>
+    <main class="LightAndTemperatureDemo"/>
+    <files>
+      <layer domain="java">
+        <dir name="src/"/>
+      </layer>
+    </files>
+  </project>
+</jcontrol>

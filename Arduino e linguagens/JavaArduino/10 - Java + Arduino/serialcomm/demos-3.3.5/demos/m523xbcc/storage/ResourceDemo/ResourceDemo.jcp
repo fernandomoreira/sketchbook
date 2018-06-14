@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcontrol version="1.0">
+  <project name="ResourceDemo">
+    <profile name="JControl/M523XBCC/Freescale" revision="4.1.0" build="20070830"/>
+    <workspace>
+      <file name="ResourceDemo.jcw"/>
+    </workspace>
+    <libraries/>
+    <files>
+      <layer domain="java">
+        <file dir="src/" name="ResourceDemo.java"/>
+        <file dir="rsc/" name="README.TXT"/>
+      </layer>
+    </files>
+  </project>
+</jcontrol>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcontrol version="1.0">
+  <project name="PCA9555Test">
+    <profile name="JControl/M523XBCC/Freescale" revision="4.1.0" build="20070830"/>
+    <workspace>
+      <file name="PCA9555Test.jcw"/>
+    </workspace>
+    <libraries/>
+    <main class="PCA9555Test"/>
+    <files>
+      <layer domain="java">
+        <dir name="src/"/>
+      </layer>
+    </files>
+  </project>
+</jcontrol>

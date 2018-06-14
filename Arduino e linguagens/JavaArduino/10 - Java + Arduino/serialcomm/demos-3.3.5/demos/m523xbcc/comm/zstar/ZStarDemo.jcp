@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcontrol version="1.0">
+  <project name="ZStarDemo">
+    <profile name="JControl/M523XBCC/Freescale" revision="4.1.0" build="20070830"/>
+    <description>
+      <locale language="de"><![CDATA[Neues Projekt mit JAVA-Quelldateien]]></locale>
+      <locale language="en"><![CDATA[New project with JAVA source files.]]></locale>
+    </description>
+    <workspace>
+      <file name="ZStarDemo.jcw"/>
+    </workspace>
+    <libraries/>
+    <files>
+      <layer domain="java">
+        <dir name="src/"/>
+      </layer>
+    </files>
+  </project>
+</jcontrol>

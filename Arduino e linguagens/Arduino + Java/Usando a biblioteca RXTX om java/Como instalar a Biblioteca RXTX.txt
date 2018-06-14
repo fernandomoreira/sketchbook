@@ -1,0 +1,25 @@
+Using RXTX In Eclipse
+From Rxtx
+Jump to: navigation, search
+
+This is how I add and use RXTX in Eclipse for Win32 Projects, there are probably other ways but it works for me. [1]
+
+   1. Copy RXTXcomm.jar, rxtxSerial.dll and rxtxParallel.dll files to the lib directory of your project
+   2. Under Project | Properties | Java Build Path | Libraries
+   3. click Add JARs... Button
+   4. Select the RXTXComm.jar from lib directory
+   5. Jar should now be in the Build Path
+   6. expand the RXTXComm.jar entry in the list and select "Native Library Location"
+   7. Select the project lib directory and apply 
+
+Be careful when using System.in.read() and rxtx in win32; It can trip across a known JRE deadlock bug
+
+Alternative way:
+
+The above setup didn't quite work for me, so here is an alternative.
+
+   1. Copy RXTXcomm.jar to the lib directory of your project
+   2. Navigate your package explorer to the lib folder, right click on RXTXcomm.jar | Build Path | Add to built path
+   3. Copy rxtxSerial.dll and rxtxParallel.dll files to the root directory of your project
+   4. Under Run | Run configurations | Classpath tab | User entries | Advanced | Add folder, choose the root folder of your project
+   5. This should be enough just to run it under Eclipse, when deploying a runnable jar, just make sure the dlls are on the same folder as the jar (JVM assumes it for classpath) 

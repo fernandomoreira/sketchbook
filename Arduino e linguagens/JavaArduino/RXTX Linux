@@ -1,0 +1,9 @@
+Olá pessoal, olha eu aqui de novo!
+
+Comecei os testes com um datasource real do tipo Modbus serial.
+
+Na primeira vez que tentei instalar o RXTX, não tinha conseguido. Hoje baixei a versão mais recente (rxtx-2.1-7-bins-r2) e aparentemente consegui instalar. No site do rxtx são indicadas vários métodos de instalação, apenas copiei os 2 arquivos para as pastas correspondentes ("RXTXcomm.jar" para "/usr/lib/jvm/java-6-sun/jre/lib/ext" e "librxtxSerial.so" para "/usr/lib/jvm/java-6-sun/jre/lib/amd64"). Como meu sistema é um Ubuntu Server x64, peguei o "librxtxSerial.so" da pasta "x86_64-unknown-linux-gnu". É essa a versão correta para o meu sistema? Há algo mais que deve ser feito na instalação?
+
+Aparentemente funcionou porque estou usando um conversor usb>serial, e ao criar um datapoint do tipo Modbus serial no ScadaBR aparece, na opção de porta, a porta correta: /dev/ttyUSB0. Porém, com o datasource desabilitado, quando mando ele pesquisar por nós ele fica eternamente com a mensagem "Iniciando procura..." (nunca aparece a porcentagem). E, pior, quando mando ele ler dados do modbus o Tomcat cai.
+
+Consegui fazer os mesmos testes, com o mesmo conversor usb>serial, em uma instalação do ScadaBR no Windows e tudo funcionou de acordo

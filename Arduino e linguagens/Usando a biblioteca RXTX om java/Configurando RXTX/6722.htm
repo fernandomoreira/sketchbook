@@ -1,0 +1,938 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><!--include file="../include/conexao_acesso.asp" --><head>
+<title>Utilizando a API RXTX para manipulação da serial - Parte I</title>
+<link href="6722_arquivos/artigo_style.css" rel="stylesheet" type="text/css">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Expires" content="0">
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta name="description" content="Java Magazine - Instalando e utilizando a API de comunicação serial RXTX para leitura e escrita em portas seriais para Windows e Linux">
+
+<link rel="canonical" href="http://www.devmedia.com.br/utilizando-a-api-rxtx-para-manipulacao-da-serial-parte-i/6722">
+
+
+
+<script src="6722_arquivos/v2" async=""></script><script src="6722_arquivos/bjGqbWII8r4A2pacwqm_6r.js" async=""></script><script src="6722_arquivos/ga.js" async="" type="text/javascript"></script><script src="6722_arquivos/all.js" id="facebook-jssdk"></script><script gapi_processed="true" src="6722_arquivos/plusone.js" async="" type="text/javascript"></script><script async="" src="6722_arquivos/cbgapi.loaded_0"></script><script src="6722_arquivos/ti.js" type="text/javascript" async=""></script><script type="text/javascript" src="6722_arquivos/article.js"></script>
+
+<script type="text/javascript" src="6722_arquivos/shCore.js"></script> 
+<script type="text/javascript" src="6722_arquivos/shBrushJScript.js"></script> 
+<link type="text/css" rel="stylesheet" href="6722_arquivos/shCoreDefault.css"> 
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+
+<script gapi_processed="true" type="text/javascript" src="6722_arquivos/plusone.js"></script>
+
+
+<script type="text/javascript">var switchTo5x=true;</script>
+<script type="text/javascript" src="6722_arquivos/buttons.js"></script>
+<script type="text/javascript">stLight.options({publisher: "7fba8974-a42c-4d1b-96a9-4249a82ce8c0", onhover: false}); </script>
+
+
+<link href="6722_arquivos/estilo.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="6722_arquivos/jquery.js"></script>
+<script type="text/javascript" src="6722_arquivos/includescript.txt"></script>
+<!--[if lte IE 8]><style>
+#nav li ul{border:1px solid #DADADA;}
+</style><![endif]-->
+<script type="text/javascript">
+(function() {
+var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+po.src = 'https://apis.google.com/js/plusone.js';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+})();
+
+(function(d, s, id) {var js, fjs = d.getElementsByTagName(s)[0];if (d.getElementById(id)) return;js = d.createElement(s); js.id = id;js.src = "//connect.facebook.net/pt_BR/all.js#xfbml=1&appId=145393072270566";fjs.parentNode.insertBefore(js, fjs);}(document, 'script', 'facebook-jssdk'));
+$.include("http://www.devmedia.com.br/includeb/topo_center.js");
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-15997918-1']);
+  _gaq.push(['_setDomainName', '.devmedia.com.br']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script><script src="6722_arquivos/topo_center.js" type="text/javascript"></script>
+<script src="6722_arquivos/checkOAuth.esi" type="text/javascript"></script><link href="6722_arquivos/buttons.css" type="text/css" rel="stylesheet"><script src="6722_arquivos/getCount2.htm" type="text/javascript"></script><script gapi_processed="true" src="6722_arquivos/plusone.js" type="text/javascript"></script><style type="text/css">.fb_hidden{position:absolute;top:-10000px;z-index:10001}
+.fb_invisible{display:none}
+.fb_reset{background:none;border-spacing:0;border:0;color:#000;cursor:auto;direction:ltr;font-family:"lucida grande", tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}
+.fb_link img{border:none}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}
+.fb_dialog_advanced{padding:10px;-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px}
+.fb_dialog_content{background:#fff;color:#333}
+.fb_dialog_close_icon{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yA/x/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;_background-image:url(http://static.ak.fbcdn.net/rsrc.php/v2/y6/x/s816eWC-2sl.gif);cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px;top:8px\9;right:7px\9}
+.fb_dialog_mobile .fb_dialog_close_icon{top:5px;left:5px;right:auto}
+.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}
+.fb_dialog_close_icon:hover{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yA/x/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent;_background-image:url(http://static.ak.fbcdn.net/rsrc.php/v2/y6/x/s816eWC-2sl.gif)}
+.fb_dialog_close_icon:active{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yA/x/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent;_background-image:url(http://static.ak.fbcdn.net/rsrc.php/v2/y6/x/s816eWC-2sl.gif)}
+.fb_dialog_loader{background-color:#f2f2f2;border:1px solid #606060;font-size:24px;padding:20px}
+.fb_dialog_top_left,
+.fb_dialog_top_right,
+.fb_dialog_bottom_left,
+.fb_dialog_bottom_right{height:10px;width:10px;overflow:hidden;position:absolute}
+/* @noflip */
+.fb_dialog_top_left{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yR/x/8YeTNIlTZjm.png) no-repeat 0 0;left:-10px;top:-10px}
+/* @noflip */
+.fb_dialog_top_right{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yR/x/8YeTNIlTZjm.png) no-repeat 0 -10px;right:-10px;top:-10px}
+/* @noflip */
+.fb_dialog_bottom_left{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yR/x/8YeTNIlTZjm.png) no-repeat 0 -20px;bottom:-10px;left:-10px}
+/* @noflip */
+.fb_dialog_bottom_right{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yR/x/8YeTNIlTZjm.png) no-repeat 0 -30px;right:-10px;bottom:-10px}
+.fb_dialog_vert_left,
+.fb_dialog_vert_right,
+.fb_dialog_horiz_top,
+.fb_dialog_horiz_bottom{position:absolute;background:#525252;filter:alpha(opacity=70);opacity:.7}
+.fb_dialog_vert_left,
+.fb_dialog_vert_right{width:10px;height:100%}
+.fb_dialog_vert_left{margin-left:-10px}
+.fb_dialog_vert_right{right:0;margin-right:-10px}
+.fb_dialog_horiz_top,
+.fb_dialog_horiz_bottom{width:100%;height:10px}
+.fb_dialog_horiz_top{margin-top:-10px}
+.fb_dialog_horiz_bottom{bottom:0;margin-bottom:-10px}
+.fb_dialog_iframe{line-height:0}
+.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #3b5998;color:#fff;font-size:14px;font-weight:bold;margin:0}
+.fb_dialog_content .dialog_title > span{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yD/x/Cou7n-nqK52.gif)
+no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}
+body.fb_hidden{-webkit-transform:none;height:100%;margin:0;left:-10000px;overflow:visible;position:absolute;top:-10000px;width:100%
+}
+.fb_dialog.fb_dialog_mobile.loading{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yc/x/3rhSv5V8j3o.gif)
+white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}
+.fb_dialog.fb_dialog_mobile.loading.centered{max-height:590px;min-height:590px;max-width:500px;min-width:500px}
+#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .45);position:absolute;left:0;top:0;width:100%;min-height:100%;z-index:10000}
+#fb-root #fb_dialog_ipad_overlay.hidden{display:none}
+.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}
+.fb_dialog_content .dialog_header{-webkit-box-shadow:white 0 1px 1px -1px inset;background:-webkit-gradient(linear, 0 0, 0 100%, from(#738ABA), to(#2C4987));border-bottom:1px solid;border-color:#1d4088;color:#fff;font:14px Helvetica, sans-serif;font-weight:bold;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}
+.fb_dialog_content .dialog_header table{-webkit-font-smoothing:subpixel-antialiased;height:43px;width:100%
+}
+.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px
+}
+.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px
+}
+.fb_dialog_content .touchable_button{background:-webkit-gradient(linear, 0 0, 0 100%, from(#4966A6),
+color-stop(0.5, #355492), to(#2A4887));border:1px solid #29447e;-webkit-background-clip:padding-box;-webkit-border-radius:3px;-webkit-box-shadow:rgba(0, 0, 0, .117188) 0 1px 1px inset,
+rgba(255, 255, 255, .167969) 0 1px 0;display:inline-block;margin-top:3px;max-width:85px;line-height:18px;padding:4px 12px;position:relative}
+.fb_dialog_content .dialog_header .touchable_button input{border:none;background:none;color:#fff;font:12px Helvetica, sans-serif;font-weight:bold;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}
+.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}
+.fb_dialog_content .dialog_content{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yJ/x/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #555;border-bottom:0;border-top:0;height:150px}
+.fb_dialog_content .dialog_footer{background:#f2f2f2;border:1px solid #555;border-top-color:#ccc;height:40px}
+#fb_dialog_loader_close{float:left}
+.fb_dialog.fb_dialog_mobile .fb_dialog_close_button{text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}
+.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}
+.fb_iframe_widget{position:relative;display:-moz-inline-block;display:inline-block}
+.fb_iframe_widget iframe{position:absolute}
+.fb_iframe_widget_lift{z-index:1}
+.fb_iframe_widget span{position:relative;display:inline-block;vertical-align:text-bottom;text-align:justify}
+.fb_hide_iframes iframe{position:relative;left:-10000px}
+.fb_iframe_widget_loader{position:relative;display:inline-block}
+.fb_iframe_widget_fluid{display:inline}
+.fb_iframe_widget_loader iframe{min-height:32px;z-index:2;zoom:1}
+.fb_iframe_widget_loader .FB_Loader{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yJ/x/jKEcVPZFk-2.gif) no-repeat;height:32px;width:32px;margin-left:-16px;position:absolute;left:50%;z-index:4}
+.fb_button_simple,
+.fb_button_simple_rtl{background-image:url(http://static.ak.fbcdn.net/rsrc.php/v2/yH/x/eIpbnVKI9lR.png);background-repeat:no-repeat;cursor:pointer;outline:none;text-decoration:none}
+.fb_button_simple_rtl{background-position:right 0}
+.fb_button_simple .fb_button_text{margin:0 0 0 20px;padding-bottom:1px}
+.fb_button_simple_rtl .fb_button_text{margin:0 10px 0 0}
+a.fb_button_simple:hover .fb_button_text,
+a.fb_button_simple_rtl:hover .fb_button_text,
+.fb_button_simple:hover .fb_button_text,
+.fb_button_simple_rtl:hover .fb_button_text{text-decoration:underline}
+.fb_button,
+.fb_button_rtl{background:#29447e url(http://static.ak.fbcdn.net/rsrc.php/v2/yl/x/FGFbc80dUKj.png);background-repeat:no-repeat;cursor:pointer;display:inline-block;padding:0 0 0 1px;text-decoration:none;outline:none}
+.fb_button .fb_button_text,
+.fb_button_rtl .fb_button_text{background:#5f78ab url(http://static.ak.fbcdn.net/rsrc.php/v2/yl/x/FGFbc80dUKj.png);border-top:solid 1px #879ac0;border-bottom:solid 1px #1a356e;color:#fff;display:block;font-family:"lucida grande",tahoma,verdana,arial,sans-serif;font-weight:bold;padding:2px 6px 3px 6px;margin:1px 1px 0 21px;text-shadow:none}
+a.fb_button,
+a.fb_button_rtl,
+.fb_button,
+.fb_button_rtl{text-decoration:none}
+a.fb_button:active .fb_button_text,
+a.fb_button_rtl:active .fb_button_text,
+.fb_button:active .fb_button_text,
+.fb_button_rtl:active .fb_button_text{border-bottom:solid 1px #29447e;border-top:solid 1px #45619d;background:#4f6aa3;text-shadow:none}
+.fb_button_xlarge,
+.fb_button_xlarge_rtl{background-position:left -60px;font-size:24px;line-height:30px}
+.fb_button_xlarge .fb_button_text{padding:3px 8px 3px 12px;margin-left:38px}
+a.fb_button_xlarge:active{background-position:left -99px}
+.fb_button_xlarge_rtl{background-position:right -268px}
+.fb_button_xlarge_rtl .fb_button_text{padding:3px 8px 3px 12px;margin-right:39px}
+a.fb_button_xlarge_rtl:active{background-position:right -307px}
+.fb_button_large,
+.fb_button_large_rtl{background-position:left -138px;font-size:13px;line-height:16px}
+.fb_button_large .fb_button_text{margin-left:24px;padding:2px 6px 4px 6px}
+a.fb_button_large:active{background-position:left -163px}
+.fb_button_large_rtl{background-position:right -346px}
+.fb_button_large_rtl .fb_button_text{margin-right:25px}
+a.fb_button_large_rtl:active{background-position:right -371px}
+.fb_button_medium,
+.fb_button_medium_rtl{background-position:left -188px;font-size:11px;line-height:14px}
+a.fb_button_medium:active{background-position:left -210px}
+.fb_button_medium_rtl{background-position:right -396px}
+.fb_button_text_rtl,
+.fb_button_medium_rtl .fb_button_text{padding:2px 6px 3px 6px;margin-right:22px}
+a.fb_button_medium_rtl:active{background-position:right -418px}
+.fb_button_small,
+.fb_button_small_rtl{background-position:left -232px;font-size:10px;line-height:10px}
+.fb_button_small .fb_button_text{padding:2px 6px 3px;margin-left:17px}
+a.fb_button_small:active,
+.fb_button_small:active{background-position:left -250px}
+.fb_button_small_rtl{background-position:right -440px}
+.fb_button_small_rtl .fb_button_text{padding:2px 6px;margin-right:18px}
+a.fb_button_small_rtl:active{background-position:right -458px}
+.fb_share_count_wrapper{position:relative;float:left}
+.fb_share_count{background:#b0b9ec none repeat scroll 0 0;color:#333;font-family:"lucida grande", tahoma, verdana, arial, sans-serif;text-align:center}
+.fb_share_count_inner{background:#e8ebf2;display:block}
+.fb_share_count_right{margin-left:-1px;display:inline-block}
+.fb_share_count_right .fb_share_count_inner{border-top:solid 1px #e8ebf2;border-bottom:solid 1px #b0b9ec;margin:1px 1px 0 1px;font-size:10px;line-height:10px;padding:2px 6px 3px;font-weight:bold}
+.fb_share_count_top{display:block;letter-spacing:-1px;line-height:34px;margin-bottom:7px;font-size:22px;border:solid 1px #b0b9ec}
+.fb_share_count_nub_top{border:none;display:block;position:absolute;left:7px;top:35px;margin:0;padding:0;width:6px;height:7px;background-repeat:no-repeat;background-image:url(http://static.ak.fbcdn.net/rsrc.php/v2/yP/x/bSOHtKbCGYI.png)}
+.fb_share_count_nub_right{border:none;display:inline-block;padding:0;width:5px;height:10px;background-repeat:no-repeat;background-image:url(http://static.ak.fbcdn.net/rsrc.php/v2/yL/x/i_oIVTKMYsL.png);vertical-align:top;background-position:right 5px;z-index:10;left:2px;margin:0 2px 0 0;position:relative}
+.fb_share_no_count{display:none}
+.fb_share_size_Small .fb_share_count_right .fb_share_count_inner{font-size:10px}
+.fb_share_size_Medium .fb_share_count_right .fb_share_count_inner{font-size:11px;padding:2px 6px 3px;letter-spacing:-1px;line-height:14px}
+.fb_share_size_Large .fb_share_count_right .fb_share_count_inner{font-size:13px;line-height:16px;padding:2px 6px 4px;font-weight:normal;letter-spacing:-1px}
+.fb_share_count_hidden .fb_share_count_nub_top,
+.fb_share_count_hidden .fb_share_count_top,
+.fb_share_count_hidden .fb_share_count_nub_right,
+.fb_share_count_hidden .fb_share_count_right{visibility:hidden}
+.fb_connect_bar_container div,
+.fb_connect_bar_container span,
+.fb_connect_bar_container a,
+.fb_connect_bar_container img,
+.fb_connect_bar_container strong{background:none;border-spacing:0;border:0;direction:ltr;font-style:normal;font-variant:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal;vertical-align:baseline}
+.fb_connect_bar_container{position:fixed;left:0 !important;right:0 !important;height:42px !important;padding:0 25px !important;margin:0 !important;vertical-align:middle !important;border-bottom:1px solid #333 !important;background:#3b5998 !important;z-index:99999999 !important;overflow:hidden !important}
+.fb_connect_bar_container_ie6{position:absolute;top:expression(document.compatMode=="CSS1Compat"? document.documentElement.scrollTop+"px":body.scrollTop+"px")}
+.fb_connect_bar{position:relative;margin:auto;height:100%;width:100%;padding:6px 0 0 0 !important;background:none;color:#fff !important;font-family:"lucida grande", tahoma, verdana, arial, sans-serif !important;font-size:13px !important;font-style:normal !important;font-variant:normal !important;font-weight:normal !important;letter-spacing:normal !important;line-height:1 !important;text-decoration:none !important;text-indent:0 !important;text-shadow:none !important;text-transform:none !important;white-space:normal !important;word-spacing:normal !important}
+.fb_connect_bar a:hover{color:#fff}
+.fb_connect_bar .fb_profile img{height:30px;width:30px;vertical-align:middle;margin:0 6px 5px 0}
+.fb_connect_bar div a,
+.fb_connect_bar span,
+.fb_connect_bar span a{color:#bac6da;font-size:11px;text-decoration:none}
+.fb_connect_bar .fb_buttons{float:right;margin-top:7px}
+.fb_edge_widget_with_comment{position:relative;*z-index:1000}
+.fb_edge_widget_with_comment span.fb_edge_comment_widget{position:absolute}
+.fb_edge_widget_with_comment span.fb_send_button_form_widget{z-index:1}
+.fb_edge_widget_with_comment span.fb_send_button_form_widget .FB_Loader{left:0;top:1px;margin-top:6px;margin-left:0;background-position:50% 50%;background-color:#fff;height:150px;width:394px;border:1px #666 solid;border-bottom:2px solid #283e6c;z-index:1}
+.fb_edge_widget_with_comment span.fb_send_button_form_widget.dark .FB_Loader{background-color:#000;border-bottom:2px solid #ccc}
+.fb_edge_widget_with_comment span.fb_send_button_form_widget.siderender
+.FB_Loader{margin-top:0}
+.fbpluginrecommendationsbarleft,
+.fbpluginrecommendationsbarright{position:fixed !important;bottom:0;z-index:999}
+/* @noflip */
+.fbpluginrecommendationsbarleft{left:10px}
+/* @noflip */
+.fbpluginrecommendationsbarright{right:10px}
+</style></head>
+<body>
+
+<div class="topALL">
+	
+	<div class="top_BG_1">
+		<div class="top_BG_div1">
+			<a href="http://www.devmedia.com.br/" style="position: absolute; top: 23px; left: 10px;"><img src="6722_arquivos/logo-devmedia.png" alt="DevMedia - asp.net, Java, Delphi, SQL e web Design, tudo em um só lugar!" title="DevMedia - asp.net, Java, Delphi, SQL e web Design, tudo em um só lugar!" width="250" border="0"></a>
+			
+			<div class="top_busca_div1">
+				<form id="search-form" method="GET" action="http://www.devmedia.com.br/articles/listcomp.asp">
+					<label id="lblsearch" for="pesquisar">Pesquisar</label>
+					<input id="pesquisar" name="txtsearch" onblur="(this.value.length>0) ? document.getElementById('lblsearch').style.display='none' : document.getElementById('lblsearch').style.display='block';" onfocus="document.getElementById('lblsearch').style.display='none';" type="text">
+					<input value="" type="submit">
+				</form>
+			</div>
+		</div>
+	</div>
+<div class="top_BG_2">
+<div class="top_BG_div1">
+<ul class="nav">
+<li><a href="http://www.devmedia.com.br/">Home</a></li>
+<li><a href="http://www.devmedia.com.br/sobre/">Entenda o site</a></li>
+<li><a href="#">Revistas<span></span></a>
+<ul>
+<li><a href="http://www.devmedia.com.br/assgold">Todas as revistas</a></li>
+<li><a href="http://www.devmedia.com.br/revista-java-magazine">Java Magazine</a></li>
+<li><a href="http://www.devmedia.com.br/revista-dotnet-magazine">.net Magazine</a></li>
+<li><a href="http://www.devmedia.com.br/revista-easy-java-magazine">easy Java Magazine</a></li>
+<li><a href="http://www.devmedia.com.br/revista-easy-dotnet-magazine">easy .net Magazine</a></li>
+<li><a href="http://www.devmedia.com.br/revista-mobile-magazine">Mobile magazine</a></li>
+<li><a href="http://www.devmedia.com.br/revista-sql-magazine">SQL Magazine</a></li>
+<li><a href="http://www.devmedia.com.br/revista-engenharia-de-software-magazine">Engenharia de Software</a></li>
+<li><a href="http://www.devmedia.com.br/revista-infra-magazine">Infra Magazine</a></li>
+<li><a href="http://www.devmedia.com.br/revista-clubedelphi">ClubeDelphi</a></li>
+</ul> 
+</li>
+<li><a href="#">Tecnologias<span></span></a>
+<ul> 
+<li><a href="http://www.devmedia.com.br/canais/">Todo conteúdo DevMedia</a></li>
+<li><a href="http://www.devmedia.com.br/front-end-web">Front-end web</a></li>
+<li><a href="http://www.devmedia.com.br/java">Java</a></li>
+<li><a href="http://www.devmedia.com.br/dotnet">.net</a></li>
+<li><a href="http://www.devmedia.com.br/banco-de-dados">Banco de dados</a></li>
+<li><a href="http://www.devmedia.com.br/mobile">Mobile</a></li>
+<li><a href="http://www.devmedia.com.br/php">PHP</a></li>
+<li><a href="http://www.devmedia.com.br/engenharia">Engenharia de Software</a></li>
+<li><a href="http://www.devmedia.com.br/infraestrutura">Infraestrutura</a></li>
+<li><a href="http://www.devmedia.com.br/delphi">Delphi</a></li>
+</ul>
+</li>
+<li><a href="#">Cursos<span></span></a>
+<ul>
+<li><a href="http://www.devmedia.com.br/cursos/">Todos os cursos online</a></li>
+<li><a href="http://www.devmedia.com.br/cursos/front-end-web">Cursos de front-end web</a></li>
+<li><a href="http://www.devmedia.com.br/cursos/java">Cursos de Java</a></li>
+<li><a href="http://www.devmedia.com.br/cursos/net">Cursos de .net</a></li>
+<li><a href="http://www.devmedia.com.br/cursos/banco-de-dados">Cursos de  Banco de dados</a></li>
+<li><a href="http://www.devmedia.com.br/cursos/engenharia-de-software">Cursos de Engenharia de Software</a></li>
+<li><a href="http://www.devmedia.com.br/cursos/php">Cursos de PHP</a></li>
+<li><a href="http://www.devmedia.com.br/cursos/mobile">Cursos de Mobile</a></li>
+<li><a href="http://www.devmedia.com.br/cursos/infraestrutura">Cursos de Infraestrutura</a></li>
+<li><a href="http://www.devmedia.com.br/cursos/delphi">Cursos de Delphi</a></li>
+<li><a href="http://www.devmedia.com.br/cursos/automacao">Cursos de Automação / NFe / Paf-ecf</a></li>
+<li><a href="http://www.devmedia.com.br/cursos/formacoes/">Formações completas</a></li>
+</ul>
+</li>
+<li><a href="http://www.devmedia.com.br/shop/">Loja Virtual</a></li>
+<li><a href="http://www.devmedia.com.br/forum/">Fórum</a></li>
+<li><a href="#">Serviços<span></span></a>
+<ul>
+<li><a href="http://www.devmedia.com.br/creditos">Sistema de Créditos</a></li>
+<li><a href="http://www.devmedia.com.br/developerads">Programa DeveloperAds</a></li>
+<li><a href="http://www.devmedia.com.br/paycontent">Programa PayContent</a></li>
+<li><a href="http://www.devmedia.com.br/player" rel="nofollow">DevMedia Player</a></li>
+<li><a href="http://www.devmedia.com.br/publish/publish_central.asp" rel="nofollow">Publique seu post</a></li>
+<li><a href="http://www.devmedia.com.br/ranking/" rel="nofollow">Ranking</a></li>
+<li><a href="http://www.devmedia.com.br/join" rel="nofollow">Cadastre-se</a></li>
+<li><a href="http://www.devmedia.com.br/feed" rel="nofollow">RSS</a></li>
+<li><a href="http://www.devmedia.com.br/login/login.asp" rel="nofollow">Login</a></li>
+<li><a href="http://www.devmedia.com.br/whatsnew/?id=1">Whats new?</a></li>
+<li><a href="http://www.devmedia.com.br/mancad" rel="nofollow">Atendimento</a></li>
+<li><a href="http://www.devmedia.com.br/faq-entrega-de-revistas/15682" rel="nofollow">FAQ Entrega de revistas</a></li>
+<li><a href="http://www.devmedia.com.br/video-aulas-faq/4668" rel="nofollow">FAQ Vídeo aulas</a></li>
+<li><a href="http://www.devmedia.com.br/devmedia-player-faq/9272" rel="nofollow">FAQ DevMedia Player</a></li>
+<li><a href="http://www.devmedia.com.br/parceiros" rel="nofollow">Parceiros DevMedia</a></li>
+</ul>
+</li>
+<li><a href="http://www.devmedia.com.br/seja-um-autor-do-site-devmedia/18799">Publicar</a></li>
+<li><a href="http://www.devmedia.com.br/assine/">Assine</a></li>
+<li><a href="http://www.devmedia.com.br/creditos/?p=6">Compre Créditos</a></li>
+</ul>
+</div>
+</div>
+	<div class="top_BG_3">
+		
+		<div class="top_BG_div1">
+			<div class="top_menu_div1">
+				<div class="top_padding" style="padding-left:21px;">
+				
+					
+					<div class="top_menu_div4" style="padding-top:7px; font-size:12px;">Bem vindo a DevMedia!</div>
+					
+					<div class="top_menu_div4" style="padding-top:3px;">
+						<form name="loginForm" method="POST" action="http://www.devmedia.com.br/login/login.asp">
+							<div style="float:left">
+								
+								LOGIN: <input name="usuario" class="top_login_senha" onkeydown="if(event.keyCode==13){document.loginForm.submit();}" type="text">&nbsp; &nbsp; 
+								
+								SENHA: <input name="senha" class="top_login_senha" onkeydown="if(event.keyCode==13){document.loginForm.submit();}" type="password">
+							</div>
+							<input name="ac" value="1" type="hidden">
+							<!--[if lte IE 7]><style>#imglogar{margin-top:2px;}</style><![endif]-->
+							<input id="imglogar" src="6722_arquivos/cinza-ok.png" alt="Logar" title="Logar" type="image">
+						</form>
+					</div>
+					
+					<div class="top_menu_div4" style="padding-top:8px;">
+						<a href="http://www.devmedia.com.br/cadastro/lembrarcadastro.asp">Esqueci minha senha</a>&nbsp; &nbsp; &nbsp; 
+						<a href="http://www.devmedia.com.br/join">Cadastre-se</a>
+					</div>
+					
+					<div class="top_menu_div3" style="padding:8px 0px 0px 0px; font-family:Verdana; font-size:10px; font-weight:bold;">
+					
+						<div style="float:left;margin:-2px 0px 0px 43px;">
+							<a href="https://plus.google.com/101753743720604160232?prsrc=3" style="float: left; margin-right: 5px; text-decoration: none;" target="_blank"><img src="6722_arquivos/gplus-16.png" alt="" style="border: 0pt none; width: 16px; height: 16px;"></a><a target="_blank" rel="nofollow" href="http://www.facebook.com/pages/DevMedia/144522665592650"><div class="facebook" alt="DevMedia Facebook" title="DevMedia Facebook"></div></a>&nbsp;<a href="http://www.devmedia.com.br/feed/"><div class="feeds" alt="Assine nossos Feeds (RSS)" title="Assine nossos Feeds (RSS)"></div></a>&nbsp;<a target="_blank" rel="nofollow" href="http://twitter.com/devmedia"><div class="twitter" alt="Siga-nos no twitter" title="Siga-nos no twitter"></div></a>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	
+</div>
+
+<center> 
+
+<table><tbody><tr><td align="left">
+
+	<div id="main" style="border-top: 0px solid #ff9999;border-right: 0px dotted #99ff99;border-bottom: 0px dashed #9999ff;border-left: 0px solid #EFEFEF;">	
+
+
+<a name="boxvalorcreditos"></a>
+
+			<div id="div_corpo_post" style="display:table;width:990px;" align="left">	 <!--  -->
+			
+
+			<div id="barra_botoes" style="margin-top:10px;padding-bottom:6px;">
+				 
+				 <font size="2"><a href="#" onclick="document.getElementById('poplogin').style.display='block';">
+				
+				<img src="6722_arquivos/icon_feedback.png" border="0">dê seu feedback
+				</a></font>&nbsp;&nbsp;&nbsp;&nbsp;
+			   
+			   <font size="2"><a href="http://www.devmedia.com.br/favorite/addfavorite.asp?comp=6722" rel="nofollow">
+			   <img src="6722_arquivos/icon_fav.png">post favorito
+			   <!--<img src="http://www.devmedia.com.br/articles/img/BOT-FAVORITOS.jpg" border=0>--></a></font>
+			   		
+			
+			</div>		
+
+
+			<div id="div_conteudo_post" style="margin-left:0px;width:650px;float:left;border-top: 1px solid #CACACA;padding-top:6px;">		
+			
+
+			<span style="font-family:verdana, sans-serif; line-height:130%;font-size:20pt"><h1>Utilizando a API RXTX para manipulação da serial - Parte I</h1></span>			
+			
+			<div id="div_descricao" style="margin-top:10px;">		
+			<h2>Instalando e utilizando a API de comunicação serial RXTX para leitura e escrita em portas seriais para Windows e Linux</h2>			
+			</div>
+
+																
+				
+					
+					
+
+
+		<div id="div_barrasocial" style="margin-top:10px;padding-bottom:10px;"> 													
+		<div>
+			<!--<span  class="st_facebook_hcount" displayText="Facebook1"></span>-->
+			<span st_processed="yes" class="st_twitter_hcount" displaytext="Tweet"><span class="stButton" style="text-decoration:none;color:#000000;display:inline-block;cursor:pointer;"><span><span style="background-image: url(&quot;http://w.sharethis.com/images/twitter_counter.png&quot;);" class="stMainServices st-twitter-counter">&nbsp;<img style="position: absolute; top: -7px; right: -7px; width: 19px; height: 19px; max-width: 19px; max-height: 19px; display: none;" src="6722_arquivos/check-big.png"></span><span class="stArrow"><span style="display: inline-block;" class="stButton_gradient stHBubble"><span class="stBubble_hcount">1</span></span></span></span></span></span>
+			<span st_processed="yes" class="st_plusone_hcount" displaytext="Tweet2"><div style="display:inline-block;overflow:hidden;line-height:0px;position:relative;vertical-align:middle;bottom:0px;width:75px; height:21px;">&nbsp;<div id="___plusone_0" style="height: 20px; width: 90px; display: inline-block; text-indent: 0pt; margin: 0pt; padding: 0pt; background: none repeat scroll 0% 0% transparent; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline;"><iframe title="+1" src="6722_arquivos/fastbutton.htm" name="I0_1354043307073" id="I0_1354043307073" vspace="0" tabindex="0" style="position: static; top: 0pt; width: 90px; margin: 0px; border-style: none; left: 0pt; visibility: visible; height: 20px;" marginwidth="0" marginheight="0" hspace="0" allowtransparency="true" scrolling="no" width="100%" frameborder="0"></iframe></div></div></span>
+			<span st_processed="yes" class="st_fblike_hcount" displaytext="Facebook"><span style="text-decoration:none;color:#000000;display:inline-block;cursor:pointer;position:relative;margin:3px 3px 0;padding:0px;font-size:11px;line-height:16px;vertical-align:bottom;overflow:visible;"><div fb-xfbml-state="rendered" data-href="http://www.devmedia.com.br/utilizando-a-api-rxtx-para-manipulacao-da-serial-parte-i/6722" class="fb-like fb_edge_widget_with_comment fb_iframe_widget" data-show-faces="false" data-layout="button_count" data-send="false" data-action=""><span style="height: 20px; width: 80px;"><iframe src="6722_arquivos/like.htm" class="fb_ltr" title="Like this content on Facebook." style="border: medium none; overflow: hidden; height: 20px; width: 80px;" name="f2a24e058ecabc" id="f46200f21c32ee" scrolling="no"></iframe></span></div></span></span>
+
+		</div>
+			
+			</div>
+
+
+				
+
+					<div id="div_conteudo">
+					<div class="p_espacado">					
+					
+					
+					<span style="font-family:verdana;font-size:14px;line-height:21px;color:#384042"><p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><b "=""><span font-size:="" 14pt;="" font-family:="" 'verdana','sans-serif';"=""><font size="4"></font></span></b></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><b "=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">Instalando e utilizando a API de comunicação serial RXTX para leitura e escrita em portas seriais para Windows e Linux</span></b></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><b "=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">&nbsp;</span></b></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">O
+ Java tem uma grande vantagem frente a outras plataformas de 
+desenvolvimento que é a possibilidade de um mesmo software ser executa 
+em diversas plataformas sob uma mesma compilação, não é necessário 
+reescrever ou nem mesmo recompilar o software para que este esteja 
+disponível em outras plataformas (sejam elas Windows, Linux, Mac ou até 
+mesmo PDA´s de gama alta).</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">&nbsp;</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">Mas
+ toda essa facilidade tem certo custo, com Java a tarefa de chamar API´s
+ nativas dos sistemas operacionais ou ainda fazer comunicação com o 
+hardware diretamente se torna um pouco mais complexo. Mas para isso a 
+Sun e demais empresas envolvidas no desenvolvimento Java disponibilizam 
+diversas API´s para facilitar o trabalho, como é o caso da API RXTX para
+ a comunicação tanto serial quanto paralela (existe também a 
+possibilidade de comunicação via USB com esta mesma API).</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">&nbsp;</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">A
+ API RXTX é baseada na API Javacomm distribuída pela própria Sun, com a 
+vantagem sobre esta de que ela é portável para Linux, Windows e Mac, 
+enquanto que a Javacomm em sua atual versão só é portável para Linux 
+engessando de certa forma o processo de desenvolvimento para múltiplas 
+plataformas.</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">&nbsp;</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><b "=""><span font-family:="" 'verdana','sans-serif';"="">Obtendo a API RXTX</span></b></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">O primeiro passo é acessar o site <a href="http://www.rxtx.org/"><font color="#0000ff">http://www.rxtx.org</font></a> e ir para a seção de download e localizar a API compilada <i "="">rxtx-2.1-7-bins-r2.zip (Final)</i>,
+ se preferir também existe a possibilidade de baixar somente o 
+código-fonte e fazer a compilação, mas isso é um procedimento mais 
+complexo que por hora será deixado de lado. Atualmente a RXTX se 
+encontra na versão 2.1.</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">&nbsp;</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">A <b "="">figura 01</b> mostra a tela de download da API RXTX no site do seu desenvolvedor.</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"=""></span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><b "=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"=""></span></b>&nbsp;</p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><b "=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"=""></span></b><img src="6722_arquivos/prvrsrxtxp1fig01.jpg" alt="prvrsrxtxp1fig01.jpg" width="640" border="0" height="499">&nbsp;</p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><b "=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">Figura 01:</span></b><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"=""> obtendo a API RXTX.</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">&nbsp;</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><b "=""><span font-family:="" 'verdana','sans-serif';"="">Instalando a API RXTX</span></b></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">Geralmente
+ desenvolvedores que nunca trabalharam com esta API esquecem algum 
+procedimento na sua instalação e devido a isso não obtém êxito no seu 
+software na leitura serial ou paralela, dessa forma é muito importante o
+ máximo de atenção, pois apesar de simples se alguns dos passos 
+descritos não forem seguidos às chances de insucesso são grandes.</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">&nbsp;</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">O
+ processo de instalação será efetuado no Windows XP porém o processo é o
+ mesmo para outros sistemas operacionais da família Windows ou até mesmo
+ para as plataformas Linux e MAC OS, a única diferenciação será quanto 
+aos arquivos de biblioteca de recursos, que no Windows são arquivos DLL,
+ no Linux são arquivos SO e no MAC OS são arquivos JNILIB.</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">&nbsp;</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">A
+ primeira coisa a se fazer é extrair o arquivo em formato ZIP para 
+dentro de alguma pasta, eu recomendo fortemente que a pasta escolhida 
+para a extração seja a mesma pasta em que o JDK está instalado, pois 
+isso irá facilitar o trabalho de manutenção e facilitará a sua 
+instalação. A <b "="">figura 02</b> mostra a extração da API para a pasta de instalação do SDK.</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"=""></span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><b "=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"=""></span></b>&nbsp;</p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><b "=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"=""></span></b><img src="6722_arquivos/prvrsrxtxp1fig02.jpg" alt="prvrsrxtxp1fig02.jpg" width="586" border="0" height="361">&nbsp;</p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><b "=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">Figura 02:</span></b><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"=""> Extração da API RXTX para a mesma pasta do SDK.</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">&nbsp;</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">No meu caso a pasta de instalação será <i "="">D:\Arquivos de programas\Java\jdk1.6.0_01\rxtx-2.1-7-bins-r2</i> mas isso irá depender de onde está instalado o seu SDK.</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">&nbsp;</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">O próximo passo é copiar os arquivos <i "="">rxtxParallel.dll</i> e <i "="">rxtxSerial.dll</i> que se encontram dentro da pasta <i "="">\Windows\i368-mingw32</i> que está dentro da pasta de instalação da RXTX para a pasta de instalação do Windows e da pasta <i "="">\System32</i> que fica dentro da pasta de instalação do Windows.</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">&nbsp;</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">A <b "="">figura 03</b> mostra a cópia dos arquivos <i "="">rxtxParallel.dll</i> e <i "="">rxtxSerial.dll</i> para a pasta <i "="">System32</i> dentro da pasta de instalação do Windows.</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">&nbsp;</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"=""></span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><b "=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"=""></span></b><img src="6722_arquivos/prvrsrxtxp1fig03.jpg" alt="prvrsrxtxp1fig03.jpg" width="640" border="0" height="499">&nbsp;</p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><b "=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">Figura 03:</span></b><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"=""> cópia dos arquivos <i "="">rxtxParallel.dll</i> e <i "="">rxtxSerial.dll.</i></span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">&nbsp;</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">Também é necessário copiar os arquivos <i "="">rxtxParallel.dll</i> e <i "="">rxtxSerial.dll</i> para dentro da pasta de instalação do seu SDK e do seu JRE na pasta <i "="">/bin</i>.
+ Vale notar que se você for um desenvolvedor e instalou o kit de 
+desenvolvimento Java (SDK) irá ter as duas pastas de instalação do JDK e
+ do JRE e precisar copiar os arquivos para as duas bases de instalação, 
+porém se você for apenas um cliente terá somente o JRE instalado, nesse 
+caso basta copiar os arquivos para a base do JRE, nesse caso é 
+necessário copiar os arquivos <i "="">rxtxParallel.dll</i> e <i "="">rxtxSerial.dll</i> tanto para a pasta <i "="">/bin</i> como para a pasta <i "="">/bin/client</i>.</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">&nbsp;</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">Agora é necessário copiar o arquivo <i "="">RXTXcomm.jar</i> que está localizado dentro da pasta base de instalação do RXTX para a pasta <i "="">/lib</i>
+ tanto do seu SDK quanto do JRE e também vale lembrar do escrito acima 
+sobre o SDK e JRE, se possuir somente o JRE basta copiar somente para 
+ele.</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">&nbsp;</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">Pronto
+ agora oficialmente a API RXTX está instalada no seu computador e pronta
+ para uso, porém em alguns computadores não temos as variáveis do Java 
+devidamente instaladas, isso também poderá comprometer a utilização da 
+API, então os passos descritos abaixo serão válidos somente se o seu 
+computador não tem as variáveis de ambiente JAVA_HOME, PATH e CLASSPATH 
+configuradas.</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">&nbsp;</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><b "=""><span font-family:="" 'verdana','sans-serif';"="">Configurando as variáveis de ambiente</span></b></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">Configurar
+ as variáveis de ambiente não tem segredo nenhum, basta ir em painel de 
+controle, desempenho e manutenção e por último sistema, irá abrir um 
+tela, nessa tela acesse a aba Avançado e clicar no botão variáveis de 
+ambiente. A <b "="">figura 04</b> mostra a tela para a configuração das variáveis de ambiente.</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"=""></span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><b "=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"=""></span></b>&nbsp;</p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><b "=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"=""></span></b><img src="6722_arquivos/prvrsrxtxp1fig04.jpg" alt="prvrsrxtxp1fig04.jpg" width="384" border="0" height="423">&nbsp;</p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><b "=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">Figura 04:</span></b><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"=""> Configurando variáveis de ambiente</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">&nbsp;</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">São
+ ao total 3 variáveis a ser configura, a primeira delas é a JAVA_HOME, 
+que é a base onde o Java está instalado. Basta para isso clicar em Nova 
+em Variáveis de Ambiente, irá se abrir uma nova tela, digite JAVA_HOME 
+no nome da variável e depois o caminho da instalação do seu Java, no meu
+ caso ficou como na <b "="">figura 05</b>.</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">&nbsp;</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"=""></span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><b "=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"=""></span></b><img src="6722_arquivos/prvrsrxtxp1fig05.jpg" alt="prvrsrxtxp1fig05.jpg" width="347" border="0" height="140">&nbsp;</p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><b "=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">Figura 05:</span></b><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"=""> criando a variável JAVA_HOME</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">&nbsp;</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">Agora é só clicar em OK que a sua variável já está criada no sistema.</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">&nbsp;</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">Devemos em seguida criar a variável CLASSPATH, o processo é o mesmo do descrito acima, basta alterar os seus valores conforme a <b "="">figura 06</b>.</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">&nbsp;</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"=""></span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><b "=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"=""></span></b><img src="6722_arquivos/prvrsrxtxp1fig06.jpg" alt="prvrsrxtxp1fig06.jpg" width="347" border="0" height="140">&nbsp;</p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><b "=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">Figura 06: </span></b><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">criando a variável CLASSPATH</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">&nbsp;</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">A
+ última variável a ser configurada é a PATH, geralmente essa variável já
+ existe no seu sistema então você terá que localizá-la e editá-la ao 
+invés de criar uma nova. Fora isso o processo é o mesmo do descrito 
+acima, basta alterar o valor da variável a acrescentar a pasta dos 
+arquivos binários do seu SDK como mostra a <b "="">figura 07</b>.</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">&nbsp;</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"=""></span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><b "=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"=""></span></b><img src="6722_arquivos/prvrsrxtxp1fig07.jpg" alt="prvrsrxtxp1fig07.jpg" width="347" border="0" height="140">&nbsp;</p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><b "=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">Figura 07:</span></b><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"=""> configurando a variável PATH</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">&nbsp;</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">Pronto,
+ agora com certeza sua API está totalmente funcional, se por acaso não 
+funcionar provavelmente algum passo foi efetuado de maneira incorreta, 
+basta refazer o processo de instalação.</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">&nbsp;</span></p>
+<p class="MsoNormal" margin:="" 0cm="" 0pt;"=""><span font-size:="" 10pt;="" font-family:="" 'verdana','sans-serif';"="">No
+ próximo artigo está mostrando o processo de construção de um 
+mini-aplicativo de leitura e escrita na porta serial utilizando a API 
+RXTX.</span></p></span></div>
+					</div>
+					
+			<br><br><img src="6722_arquivos/row_divide_full.png" width="650px" height="1px"><br>
+			
+			 <div id="box_comentarios"> 
+				
+<a name="linkcoment"></a>
+<div id="div_comentarios" style="display:table;">
+
+<br>
+	  
+				  <a href="http://www.devmedia.com.br/rte3/addcomment.asp?idcomp=6722">
+			  
+					<img src="6722_arquivos/comente.png" border="0">
+					
+					</a>
+	  &nbsp;&nbsp;&nbsp;<span class="texto_comentario_qtd">&nbsp;0&nbsp;COMENTÁRIO</span>
+<br><br>
+
+
+<div id="popcoment">
+<a href="#coment" onclick="document.getElementById('popcoment').style.display='none';"><b>[Fechar]</b></a>
+<br><br>
+	Este post é fechado - você precisa ter acesso ao post para incluir um comentário.<br><br>
+</div>
+
+<br>
+
+
+
+  <a href="http://www.devmedia.com.br/rte3/addcomment.asp?idcomp=6722" class="linkDEV">Nenhum comentário foi postado -  seja o primeiro a comentar!</a>
+	
+
+</div>
+
+
+	
+			 </div> 
+
+			<br><br><br>
+
+			
+			<div style="border-bottom:1px solid #000000;margin-bottom:10px;padding-top:30px;">
+			
+			<div id="divTab1" style="font-size:13px;float:left;left:15px;position:relative;top:1px;padding-left:10px;padding-right:10px;padding-top:10px;padding-bottom:10px;border-top:1px solid #000000;border-bottom:1px solid white;border-left:1px solid #000000;border-right:1px solid #000000;"><font size="2"><center><a onclick="changeTab(0);">cursos relacionados</a></center></font></div>
+
+			<div id="divTab2" style="font-size:13px;left:30px;color:grey;float:left;position:relative;top:1px;padding-left:10px;padding-right:10px;padding-top:10px;padding-bottom:10px;"><font size="2"><center><a onclick="changeTab(1);">posts em sequência</a></center></font></div>
+			
+			<div id="divTab3" style="font-size:13px;left:50px;color:grey;float:left;position:relative;top:1px;padding-left:10px;padding-right:10px;padding-top:10px;padding-bottom:10px;"><font size="2"><center><a onclick="changeTab(2);">últimos do autor</a></center></font></div>
+
+			<div style="clear:both;"></div>
+			
+			</div>
+			
+			
+			  <div id="divBox_2">								 				 								 
+				<span style="line-height:19px;font-family:verdana;font-size:11px;color:#384042">
+
+<div style="padding-top:12px;"><a href="http://www.devmedia.com.br/introducao-ao-netbeans-6-e-suas-novas-funcionalidades-parte-iv/8858" class="linkDEV">Introdução ao Netbeans 6 e suas novas funcionalidades &#8211; Parte IV</a></div>
+				
+
+<div style="padding-top:12px;"><a href="http://www.devmedia.com.br/introducao-ao-netbeans-6-e-suas-novas-funcionalidades-parte-iii/8857" class="linkDEV">Introdução ao Netbeans 6 e suas novas funcionalidades &#8211; Parte III</a></div>
+				
+
+<div style="padding-top:12px;"><a href="http://www.devmedia.com.br/introducao-ao-netbeans-6-e-suas-novas-funcionalidades-parte-ii/8855" class="linkDEV">Introdução ao Netbeans 6 e suas novas funcionalidades &#8211; Parte II</a></div>
+				
+
+<div style="padding-top:12px;"><a href="http://www.devmedia.com.br/introducao-ao-netbeans-6-e-suas-novas-funcionalidades-parte-i/8854" class="linkDEV">Introdução ao Netbeans 6 e suas novas funcionalidades &#8211; Parte I</a></div>
+				
+
+<div style="padding-top:12px;"><a href="http://www.devmedia.com.br/lendo-e-escrevendo-arquivos-do-excel-com-a-api-jxl-parte-i/7328" class="linkDEV">Lendo e escrevendo arquivos do Excel com a API JXL &#8211; Parte I</a></div>
+				
+
+
+<div style="padding-top:12px;"><a href="http://www.devmedia.com.br/space.asp?id=188709&amp;post=2"><b>[Ver todos]</b></a></div>
+
+</span>			  					
+			  </div>
+
+			  <div id="divBox_3">  			  
+					
+<font>
+<span style="line-height:19px;font-family:verdana;font-size:11px;color:#384042">
+
+
+<div style="padding-top:12px;"><a href="http://www.devmedia.com.br/curso-online-introducao-ao-desenvolvimento-para-celulares-com-j2me/5109" class="linkDEV">Curso online: Introdução ao desenvolvimento para celulares com J2ME</a></div>
+
+<div style="padding-top:12px;"><a href="http://www.devmedia.com.br/curso-online-padroes-de-projeto-em-java/5994" class="linkDEV">Curso online: Padrões de Projeto em Java</a></div>
+
+<div style="padding-top:12px;"><a href="http://www.devmedia.com.br/curso-online-desenvolvendo-uma-aplicacao-completa-com-struts-2/7404" class="linkDEV">Curso online - Desenvolvendo uma aplicação completa com Struts 2</a></div>
+
+<div style="padding-top:12px;"><a href="http://www.devmedia.com.br/introducao-ao-ruby-on-rails/7677" class="linkDEV">Introdução ao Ruby on Rails</a></div>
+
+<div style="padding-top:12px;"><a href="http://www.devmedia.com.br/administracao-do-firebird-interbase/4874" class="linkDEV">Administração do Firebird/InterBase
+</a></div>
+
+
+<div style="padding-top:12px;"><b><a href="http://www.devmedia.com.br/cursos">[Ver todos]</a></b></div>
+
+</span>
+</font>
+			  
+				</div>
+				
+			
+			  	<div id="divBox_1">
+					
+<font>
+<span style="line-height:19px;font-family:verdana;font-size:11px;color:#384042">
+<div style="padding-top:12px;"><a href="http://www.devmedia.com.br/utilizando-a-api-rxtx-para-manipulacao-da-serial-parte-iv/7316">Utilizando a API RXTX para manipulação da serial &#8211; Parte IV</a></div><div style="padding-top:12px;"><a href="http://www.devmedia.com.br/utilizando-a-api-rxtx-para-manipulacao-da-serial-parte-iii/7171">Utilizando a API RXTX para manipulação da serial &#8211; Parte III</a></div><div style="padding-top:12px;"><a href="http://www.devmedia.com.br/utilizando-a-api-rxtx-para-manipulacao-da-serial-parte-ii/7169">Utilizando a API RXTX para manipulação da serial - Parte II</a></div><div style="padding-top:12px;"><a href="http://www.devmedia.com.br/utilizando-a-api-rxtx-para-manipulacao-da-serial-parte-i/6722">Utilizando a API RXTX para manipulação da serial - Parte I</a></div>
+</span>
+</font>
+			  
+					</div>
+
+			
+
+		</div>
+
+		<div style="margin-left:690px;margin-bottom:15px;border-left:1px solid #EEEEEE;padding-left:5px;"> 
+<span style="font-family:verdana;font-size:10px;line-height:19px;color:#384042">
+
+
+
+	
+
+
+
+   Você está em:
+	
+	<a class="linkDEV" href="http://www.devmedia.com.br/java"> &nbsp;canal Java</a>   
+   
+	<br>
+	<div style="float:left">
+   	
+	
+   <b>+Java:</b>&nbsp;&nbsp;
+   <a class="linkDEV" href="http://www.devmedia.com.br/articles/listcomp.asp?tipo=1&amp;site=34">artigos</a>&nbsp;|&nbsp;<a class="linkDEV" href="http://www.devmedia.com.br/articles/listcomp.asp?tipo=2&amp;site=34">vídeos</a>&nbsp;|&nbsp;
+   <a class="linkDEV" href="http://www.devmedia.com.br/cursos/java">cursos</a>&nbsp;|&nbsp;   
+   
+   </div>
+   
+
+   <div id="barra_navega_mais"><a style="cursor: pointer;" onclick="document.getElementById('localiza_boxObjetos').style.display='block';document.getElementById('barra_navega_mais').style.display='none';">mais &#9660;</a></div>
+   
+   
+
+  
+<div id="localiza_boxObjetos"> <!--  -->   <br>
+
+	
+	<li><a class="linkDEV" href="http://www.devmedia.com.br/assgold/listmag.asp?site=6">Revista Java Magazine</a><br>
+	</li><li><a class="linkDEV" href="http://www.devmedia.com.br/assgold/listmag.asp?site=61">Revista easy Java Magazine</a><br>
+	</li><li><a class="linkDEV" href="http://www.devmedia.com.br/assgold/listmag.asp?site=5">Revista webMobile</a><br>
+	
+	</li><li><a class="linkDEV" href="http://www.devmedia.com.br/cursos/formacoes.asp">Formacoes completas Java</a><br>
+	
+	</li><li>
+	
+	<a class="linkDEV" href="http://www.devmedia.com.br/articles/listcomp.asp?tipo=18&amp;site=34">Palestras de Java</a>
+		<br>
+	</li><li>
+	<a class="linkDEV" href="http://www.devmedia.com.br/articles/listcomp.asp?tipo=9&amp;site=34">E-books de Java</a>
+	<br>
+	</li><li>
+	
+	<a class="linkDEV" href="http://www.devmedia.com.br/articles/listcomp.asp?tipo=10&amp;site=34">Downloads de Java</a>
+	
+
+</li></div>
+
+</span>	
+</div>
+
+	
+		
+		<div id="div_publicidade" style="margin-left:690px;">
+		
+		
+<span style="font-size:10px; font-family:Arial, Verdana; color:#999999;">Publicidade</span><br>
+<div style="position:relative; width:300px; height:250px; z-index:1; border:0px solid black;">
+	
+	<object style="position: relative; z-index: 1;" width="300" height="250">
+		
+			<param name="movie" value="http://www.devmedia.com.br/imagens/banners/iOS - IAI-3.swf"> 
+		
+		
+		<param name="quality" value="high">
+		<param name="wmode" value="transparent">
+		
+			<embed wmode="transparent" style="position: relative; z-index: 1;" src="6722_arquivos/iOS%2520-%2520IAI-3.swf" width="300" height="250">
+		
+	</object>
+</div>
+
+		</div>
+
+		
+<div style="margin-top:30px; margin-left:690px;border-bottom:1px solid #B8B8B8;border-top:1px solid #B8B8B8;border-left:1px solid #B8B8B8;border-right:1px solid #B8B8B8;"> 
+		
+		<div style="background-color:#F7F7F7;border-bottom:1px solid #B8B8B8;padding-top:5px;padding-bottom:5px;"><center><font size="3" face="verdana"><b>Autor</b></font></center></div>
+			
+		<div id="foto_autor" style="float:left;padding-top:15px;padding-left:15px;padding-bottom:15px;">
+		<a class="linkDEV" href="http://www.devmedia.com.br/space.asp?id=188709">
+		
+		<img src="6722_arquivos/Col_188709_petterrafael.jpg" width="80px" border="0">
+		
+		</a>
+		</div>
+
+		<div id="bio_autor" style="margin-left:109px;padding-right:15px;padding-top:15px;padding-bottom:15px;">
+		<a class="linkDEV" href="http://www.devmedia.com.br/space.asp?id=188709"><font size="2" face="verdana">Petter Rafael Villa Real Silva</font></a><br><br>
+
+		<div style="width:175px;font-family:verdana;font-size:10px;line-height:13px;color:#384042;word-wrap: break-word;">
+		Petter Rafael Villa Real Silva (petter@viamais.net) Pós-graduado em 
+Desenvolvimento de Sistemas para a Web pela Universidade Estadual de 
+Maringá, trabalho como analista de sistemas na Alimentos Wilson e estou a
+ frente do site www.viamais.net dedicado a serviços de host e 
+desenvolvimento de sistemas ...
+		</div>
+		<br><br>
+		<a class="linkDEV" href="http://www.devmedia.com.br/space.asp?id=188709"><font size="1" color="blue" face="verdana"><b>Space do autor</b></font></a>
+		</div>
+</div>
+
+<div style="margin-top:30px; margin-left:690px;border-bottom:1px solid #B8B8B8;border-top:1px solid #B8B8B8;border-left:1px solid #B8B8B8;border-right:1px solid #B8B8B8;"> 
+
+		<div style="background-color:#F7F7F7;border-bottom:1px solid #B8B8B8;padding-top:5px;padding-bottom:5px;"><center>
+				
+		<font size="3" face="verdana"><b>Estatísticas</b></font>
+		
+		</center></div>
+
+ <div style="margin-left:15px;margin-bottom:15px;margin-top:15px;">
+	
+	
+
+	<div style="padding-top:3px;float:left;margin-right:20px;"><font size="2" face="tahoma">Favorito:</font></div>
+	<div style="padding-top:3px;margin-left:130px;"><a href="http://www.devmedia.com.br/favorite/addfavorite.asp?comp=6722" title="clique para favoritar"><font size="2" face="tahoma">10 vez(es)</font></a></div>
+
+	<div style="padding-top:3px;float:left;margin-right:20px;"><font size="2" face="tahoma">Comentários:</font></div>
+	<div style="padding-top:3px;margin-left:130px;"><a href="#linkcoment" title="clique para comentar"><font size="2" face="tahoma">0</font></a></div>
+
+
+	<!--<div style="float:left;margin-right:20px;"><font face=tahoma size=2><BR></font></div>
+	<div ><BR></font></div>-->
+
+
+	<div style="padding-top:20px;float:left;margin-right:20px;"><font size="2" face="tahoma">Feedback:</font></div>
+	<div id="divrank" style="padding-top:20px;" onmouseover="document.getElementById('divutil').style.display='block';document.getElementById('divutil2').style.display='none';document.getElementById('divrank2').style.display='block';document.getElementById('divrank').style.display='none';"><img src="6722_arquivos/star_rank.png"><img src="6722_arquivos/star_rank.png"><img src="6722_arquivos/star_rank.png"><img src="6722_arquivos/star_rank.png"><img src="6722_arquivos/estrela_apagada.png"></div>
+	<div id="divrank2" style="padding-top:20px;" onmouseout="document.getElementById('divrank2').style.display='none';document.getElementById('divrank').style.display='block';">
+	<font size="2"><a href="#" onclick="document.getElementById('div_feedback_post').style.display='block';">clique para votar</a></font></div>
+
+	<div style="padding-top:6px;float:left;margin-right:20px;"><font size="2" face="tahoma">Utilidade:</font></div>
+
+	<div style="height:25px;" id="divutil" onmouseover="document.getElementById('divutil2').style.display='block';document.getElementById('divutil').style.display='none';"><font size="2">
+	<img src="6722_arquivos/feedback_Up.png"> 6&nbsp;&nbsp;
+	<img src="6722_arquivos/feedback_Down.png">  1
+	</font>
+	</div>
+	<div style="height:25px;" id="divutil2" onmouseover="document.getElementById('divrank').style.display='block';document.getElementById('divrank2').style.display='none';" onmouseout="document.getElementById('divutil2').style.display='none';document.getElementById('divutil').style.display='block';">
+	<font size="2"><a href="#" onclick="document.getElementById('div_feedback_post').style.display='block';">clique para votar</a></font></div>
+
+</div>
+
+</div>
+
+<div style="margin-top:30px; margin-left:690px;border-bottom:1px solid #B8B8B8;border-top:1px solid #B8B8B8;border-left:1px solid #B8B8B8;border-right:1px solid #B8B8B8;"> 
+
+<div style="background-color:#F7F7F7;border-bottom:1px solid #B8B8B8;padding-top:5px;padding-bottom:5px;"><center>
+<font size="3" face="tahoma"><b>Serviços</b></font>
+</center></div>
+
+ <div style="margin-left:15px;margin-bottom:15px;margin-top:15px;">
+
+			  
+
+			 
+					<div>
+						<img src="6722_arquivos/icon_coment.png">&nbsp;<a class="linkDEV" href="http://www.devmedia.com.br/rte3/addcomment.asp?idcomp=6722" rel="nofollow"><font size="2" face="tahoma">Inclua um comentário</font></a>
+						</div>
+				  
+					<div style="padding-top:10px;">
+						<img src="6722_arquivos/icon_fav.png">&nbsp;<a href="http://www.devmedia.com.br/favorite/addfavorite.asp?comp=6722" class="linkDEV" rel="nofollow"><font size="2" face="tahoma">Adicionar aos Favoritos</font></a>
+						</div>
+				  
+				  <div style="padding-top:10px;">
+						<img src="6722_arquivos/icon_lido.png">&nbsp;<a class="linkDEV" href="http://www.devmedia.com.br/favorite/add_finished.asp?comp=6722" style="color: rgb(51, 51, 51); font-weight: bold;" rel="nofollow"><font size="2" face="tahoma"></font></a><font size="2" face="tahoma"><a href="http://www.devmedia.com.br/favorite/add_finished.asp?comp=6722" class="linkDEV" rel="nofollow"><font size="2" face="tahoma">Marcar como lido/assistido</font></a>
+				  </font></div><font size="2" face="tahoma">
+
+				  <div style="padding-top:10px;">
+						<img src="6722_arquivos/icon_anot.png">&nbsp;<a class="linkDEV" href="http://www.devmedia.com.br/articles/addnote.asp?idcomp=6722" rel="nofollow"><font size="2" face="tahoma">Incluir anotação pessoal </font></a><font size="2" face="tahoma"><a href="http://www.devmedia.com.br/novo-recurso-devmedia-anotacoes-pessoais/5508" class="linkDEV">&nbsp;<font size="1">(ajuda)</font></a>				  						
+					</font></div><font size="2" face="tahoma">
+
+					<div style="padding-top:10px;">
+					  <font size="2" face="tahoma"><img src="6722_arquivos/icon_feedback.png">&nbsp;<a href="#" onclick="document.getElementById('div_feedback_post').style.display='block';" rel="nofollow">Dê seu voto para este post</a></font>
+					  </div>
+			
+				  <div style="padding-top:10px;">
+						<img src="6722_arquivos/icon_printer.png">&nbsp;<a class="linkDEV" href="http://www.devmedia.com.br/articles/viewcomp_forprint.asp?comp=6722"><font size="2" face="tahoma">Versão para impressão</font></a>
+						</div>
+
+	</font></font></div><font size="2" face="tahoma"><font size="2" face="tahoma">
+</font></font></div><font size="2" face="tahoma"><font size="2" face="tahoma">				
+		</font></font></div><font size="2" face="tahoma"><font size="2" face="tahoma">
+
+	</font></font></div><font size="2" face="tahoma"><font size="2" face="tahoma">
+	
+
+<div id="div_feedback_post">
+<font size="2" face="verdana"><a href="#" onclick="document.getElementById('div_feedback_post').style.display='none';">[Fechar]</a></font>
+<br><br>
+		
+		<font size="2" face="verdana"><b>Você precisa estar logado para dar um feedback. </b><br><br><a href="http://www.devmedia.com.br/login/login.asp?ret=articles/viewcomp.asp?comp=6722" rel="nofollow">Clique aqui para efetuar o login</a></font>
+		
+</div>
+				     				
+<div id="pop">
+<a href="#" onclick="document.getElementById('pop').style.display='none';"><font size="2" face="verdana"><b>[Fechar]</b></font></a><font size="2" face="verdana">
+<br>
+	<br><br>
+	  Este post está <u>fechado</u>. <a href="http://www.devmedia.com.br/mvp" rel="nofollow" target="_blank">Saiba mais sobre a <b>assinatura MVP</b>!</a>
+</font></div><font size="2" face="verdana">
+
+
+<div id="poplogin">
+<a href="#" onclick="document.getElementById('poplogin').style.display='none';"><font size="2" face="verdana"><b>[Fechar]</b></font></a><font size="2" face="verdana">
+
+	
+		Você precisa estar logado para dar seu feedback.	
+	<br><br>
+	<a href="http://www.devmedia.com.br/login/login.asp?comp=6722">Clique aqui para efetuar o login</a><br><br>
+	<a href="https://seguro.devmedia.com.br/cadastro_first.asp?site=3">Caso não tenha um cadastro DevMedia, clique aqui para se cadastrar (gratuito)</a>
+	
+</font></div><font size="2" face="verdana">
+
+<div id="poplink">
+<a href="#" onclick="document.getElementById('poplink').style.display='none';"><font size="2" face="verdana"><b>[Fechar]</b></font></a><font size="2" face="verdana">
+<br><br>
+	Este é um post fechado - Você precisa ter acesso ao post para habilitar os links de download.<br><br>
+</font></div><font size="2" face="verdana">
+
+
+
+
+</font></font></font></font></font></td></tr></tbody></table>
+
+</center>
+
+
+<div style="margin-top:35px;background:url(/imagens/portal2010/shadow-down.png?d1) repeat-x 0 0;width:100%;height:8px;"></div>
+<div class="rodapeALL" style="margin-top:0;height:250px;"><!--box-shadow: 0px -4px 4px 0px #666;-->
+	<div class="rodape_div1">
+		<div class="rodape_div2" style="padding:0px;height:250px;border:0px solid black;">
+			<div id="rodape_div1_floatLeft_first" class="rodape_div1_floatLeft" style="position:absolute;margin:0px;bottom:11px;left:0px;border:0px;">
+				<div style="display:table;padding-bottom:12px;">
+				<a class="linkRodape" target="_blank" href="http://www.web-03.net/" rel="nofollow"><img alt="web-03" title="web-03" src="6722_arquivos/logoweb03.png" width="77" border="0"></a><br>
+				
+				<a class="" href="http://www.devmedia.com.br/" rel="nofollow">DevMedia</a>
+				&nbsp;|&nbsp; <a class="" target="_blank" href="http://www.web-03.net/devmedia.asp">Anuncie</a>
+				&nbsp;|&nbsp; <a class="" href="http://www.devmedia.com.br/central/faq_fale_conosco.asp">Fale conosco</a>
+				<br><a href="http://www.porta80.com.br/" target="_blank">Hospedagem web</a> por Porta 80 Web Hosting
+				
+				</div><div style="display:table;font-family: Verdana, Arial, Helvetica, sans-serif;border-top:1px solid #AAA;"><font style="font-size:10px;color:#808080;">2012 - Todos os Direitos Reservados a </font><a class="linkRodape2" target="_blank" href="http://www.web-03.net/" rel="nofollow"><strong>web-03</strong></a></div>
+			</div><div style="float:right;margin:33px -10px 0 0;background:#fff;"><div fb-xfbml-state="rendered" class="fb-like-box fb_iframe_widget" data-href="http://www.facebook.com/DevmediaWeb03" data-width="515" data-height="170" data-show-faces="true" data-stream="false" data-header="false"><span style="height: 170px; width: 515px;"><iframe src="6722_arquivos/likebox.htm" class="fb_ltr" style="border: medium none; overflow: hidden; height: 170px; width: 515px;" name="f2674a4d1c20c92" id="f299b37f437842e" scrolling="no"></iframe></span></div></div>
+		</div>
+	</div>
+	
+</div>
+
+<iframe style="display: none;" src="6722_arquivos/getSegment.htm" name="stSegmentFrame" id="stSegmentFrame" scrolling="no" width="0px" frameborder="0" height="0px"></iframe><div style="visibility: hidden; top: -999px; left: -999px; width: 500px; z-index: 89999999;" class="stwrapper" id="stwrapper"><div class="stCloseNew2"></div><iframe src="6722_arquivos/index.htm" style="top: 0px; left: 0px;" name="stLframe" class="stLframe" id="stLframe" allowtransparency="true" scrolling="no" width="500px" frameborder="0" height="430px"></iframe></div><div id="stOverlay" style="height: 100%; width: 100%; background-color: rgb(0, 0, 0); opacity: 0.6; position: fixed; display: none; left: 0pt; top: 0pt; z-index: 89999990;"></div><div class=" fb_reset" id="fb-root"><div style="position: absolute; top: -10000px; height: 0pt; width: 0pt;"><div><iframe src="6722_arquivos/xd_arbiter.htm" name="fb_xdm_frame_http" id="fb_xdm_frame_http"></iframe><iframe src="6722_arquivos/xd_arbiter_002.htm" name="fb_xdm_frame_https" id="fb_xdm_frame_https"></iframe></div></div><div style="position: absolute; top: -10000px; height: 0pt; width: 0pt;"><div><iframe src="6722_arquivos/oauth.htm" name="f25f033d86d957c" id="f25f033d86d957c" style="display: none;"></iframe></div></div></div></body></html>

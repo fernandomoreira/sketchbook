@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcontrol version="1.0">
+  <project name="MusicBox">
+    <profile name="JControl/M523XBCC/Freescale" revision="4.1.0" build="20070830"/>
+    <workspace>
+      <file name="MusicBox.jcw"/>
+    </workspace>
+    <libraries/>
+    <files>
+      <layer domain="java">
+        <dir name="src/"/>
+        <dir name="rsc/"/>
+      </layer>
+    </files>
+  </project>
+</jcontrol>

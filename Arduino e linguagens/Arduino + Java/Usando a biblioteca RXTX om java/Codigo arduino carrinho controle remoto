@@ -1,0 +1,38 @@
+#include ;
+ 
+int g1;
+int d;
+AF_DCMotor motor(3, MOTOR12_1KHZ);
+AF_DCMotor motor2(4, MOTOR12_1KHZ);
+void setup(){
+    d = 200;
+    Serial.begin(9600);
+    motor.setSpeed(255);
+    motor2.setSpeed(255);
+}
+ 
+void loop(){
+   delay(d);
+   if (Serial.available() &gt;= 1) {
+      g1 = Serial.read();
+      Serial.print(g1);
+      if(g1 == 1){
+          motor.run(FORWARD);
+          d = 800;
+      }if(g1 == 2){
+          motor2.run(FORWARD);
+          d = 800;
+      }if(g1 == 3){
+          motor2.run(FORWARD);
+          motor.run(FORWARD);
+          d = 200;
+      }else if(g1 == 4){
+         motor2.run(BACKWARD);
+         motor.run(BACKWARD);
+         d = 200;
+      }
+   }else{
+      motor2.run(RELEASE);
+      motor.run(RELEASE);
+   }
+}
